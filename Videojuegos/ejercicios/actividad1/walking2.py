@@ -75,7 +75,7 @@ class Girl:
             self.__girl_images[i] = pygame.Rect(left, top, self.__image_size[0], self.__image_size[1])
 
     def update(self,delta_time):
-
+        self.__indice_imagen += 1
         if (self.__contador_series % 2 ==0) and (0< self.__indice_imagen <= 10):
             
             if self.__indice_imagen == 10:
@@ -99,12 +99,12 @@ class Girl:
            if self.__pos.x < 0:
                self.__contador_series += 1 
                self.__indice_imagen = 0
-         
+    
         
     def render(self,destiny):
         
         destiny.blit(self.__image, self.__pos, self.__girl_images[self.__indice_imagen])
-        
+
 def main(args=None):
     
     app = Animation()
