@@ -36,7 +36,7 @@ class Animation:
                     self.__running = False
 
     def __update(self,deltatime):
-
+        
         self.__walk.update(delta_time)
 
     def __render(self):
@@ -84,7 +84,8 @@ class Walk:
     def go_for_a_walk(self):
         pass
     def update(self,delta_time):
-         self.__pos += self.__speed * delta_time
+         self.__pos.x += self.__speed * delta_time
+         
     def render(self,destiny):
         indice=1
         self.__trip.render(destiny ,self.__pos, indice)
