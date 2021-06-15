@@ -8,7 +8,8 @@ class Animation:
     
     screen_size = (640,480)
     fps = 60
-    speed = 0.3
+    speed = 0.1
+    clock = pygame.time.Clock()
     
     def __init__(self):
         pygame.init()
@@ -64,8 +65,9 @@ class Girl:
         self.__images_x_line = 10
         self.__image=pygame.image.load(os.path.join(*Girl.image_filename))
         self.__speed=Animation.speed
-        self.__indice_imagen=0
-        self.__contador_series=0
+        self.__index_image=0
+        self.__counter_series=0
+        
 
         self.__girl_images = dict()
         
@@ -75,35 +77,33 @@ class Girl:
             self.__girl_images[i] = pygame.Rect(left, top, self.__image_size[0], self.__image_size[1])
 
     def update(self,delta_time):
-        self.__indice_imagen += 1
-        if (self.__contador_series % 2 ==0) and (0< self.__indice_imagen <= 10):
-            
-            if self.__indice_imagen == 10:
-                self.__indice_imagen = 1
+        
+        self.__index_image += 1
+        if (self.__counter_series % 2 ==0) and (0< self.__index_image <= 10):
+             if self.__index_image == 10:
+                self.__index_image = 1
 
-        if (self.__contador_series % 2  == 1) and (11 < self.__indice_imagen <= 20):
+        elif (self.__counter_series % 2  == 1) and (11 < self.__index_image<= 20):
             
-            if self.__indice_imagen == 20:
-                self.__indice_imagen = 11
-            else:
-                self.__indice_imagen += 1
+            if self.__index_image == 20:
+                self.__index_image = 12
 
-        if (self.__contador_series % 2 == 0):
+        if (self.__counter_series % 2 == 0):
             self.__pos.x += self.__speed * delta_time
             if self.__pos.x > 610:
-                self.__contador_series += 1
-                self.__indice_imagen = 11
+                self.__counter_series += 1
+                self.__index_image = 12
 
-        if (self.__contador_series % 2 == 1):
+        elif (self.__counter_series % 2 == 1):
            self.__pos.x -= self.__speed * delta_time
            if self.__pos.x < 0:
-               self.__contador_series += 1 
-               self.__indice_imagen = 0
+               self.__counter_series += 1 
+               self.__index_image = 1
     
         
     def render(self,destiny):
-        
-        destiny.blit(self.__image, self.__pos, self.__girl_images[self.__indice_imagen])
+        Animation.clock.tick(10)
+        destiny.blit(self.__image, self.__pos, self.__girl_images[self.__index_image])
 
 def main(args=None):
     
