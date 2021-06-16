@@ -8,7 +8,7 @@ class Animation:
     
     screen_size = (640,480)
     fps = 60
-    speed = 0.1
+    speed = 0.2
     clock = pygame.time.Clock()
     
     def __init__(self):
@@ -87,7 +87,7 @@ class Walk:
         
     def update (self, delta_time):
 
-        if Animation.clock.tick(10):
+        if Animation.clock.tick(15):
             self.__index_image += 1
 
         if (self.__counter_series % 2 ==0) and (0< self.__index_image <= 10):
