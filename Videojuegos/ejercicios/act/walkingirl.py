@@ -16,7 +16,7 @@ class Animation:
         self.__screen = pygame.display.set_mode(Animation.screen_size, 0, 32)
         pygame.display.set_caption("Walking Girl")
         self.__fps_clock = pygame.time.Clock()
-        self.__girl=Girl()
+        self.__walk=Walk()
 
     def run(self):
         self.__running = True
@@ -38,12 +38,12 @@ class Animation:
 
     def __update(self,delta_time):
        
-        self.__girl.update(delta_time)
+        self.__walk.update(delta_time)
 
     def __render(self):
 
         self.__screen.fill((0,0,0))
-        self.__girl.render(self.__screen)
+        self.__walk.render(self.__screen)
         pygame.display.update()
 
 
@@ -53,32 +53,43 @@ class Animation:
 
 class Girl:
     
-    image_filename=["walking_animation.png"]
-    
+    def __init__(self, filename, image_size, total_images, images_x_line, pos, index_image):
+
+        self.__image=pygame.image.load(os.path.join(*filename))
+        self.__image_size= image_size
+        self.__total_images = total_images
+        self.__images_x_line = images_x_line
+        self.__pos= pos
+        self.__index_image = index_image
+        self.__girl_images = dict()
+
+        for i in range(self.__total_images):
+            left = self.__image_size[0] * (i % self.__images_x_line)
+            top = self.__image_size[1] * int(i / self.__images_x_line)
+            self.__girl_images[i] = pygame.Rect(left, top, self.__image_size[0], self.__image_size[1])
+    def render (self, destiny,index_image):
+        destiny.blit(self.__image, self.__pos, self.__girl_images[index_image])
+ 
+        
+class Walk:
 
     def __init__(self):
-
         self.__image_size = (64,128)
         self.__pos=pygame.math.Vector2(0,350)
         self.__end_pos=pygame.math.Vector2(0,200)
         self.__total_images = 20
         self.__images_x_line = 10
-        self.__image=pygame.image.load(os.path.join(*Girl.image_filename))
+        self.__image_filename=['res','walking_animation.png']
+        self.__index_image=1
+        self.__girl=Girl(self.__image_filename, self.__image_size, self.__total_images,self.__images_x_line, self.__pos, self.__index_image)
         self.__speed=Animation.speed
-        self.__index_image=0
         self.__counter_series=0
         
+    def update (self, delta_time):
 
-        self.__girl_images = dict()
-        
-        for i in range(self.__total_images):
-            left = self.__image_size[0] * (i % self.__images_x_line)
-            top = self.__image_size[1] * int(i / self.__images_x_line)
-            self.__girl_images[i] = pygame.Rect(left, top, self.__image_size[0], self.__image_size[1])
+        if Animation.clock.tick(10):
+            self.__index_image += 1
 
-    def update(self,delta_time):
-        
-        self.__index_image += 1
         if (self.__counter_series % 2 ==0) and (0< self.__index_image <= 10):
              if self.__index_image == 10:
                 self.__index_image = 1
@@ -90,20 +101,20 @@ class Girl:
 
         if (self.__counter_series % 2 == 0):
             self.__pos.x += self.__speed * delta_time
-            if self.__pos.x > 610:
+            if self.__pos.x > 590:
                 self.__counter_series += 1
                 self.__index_image = 12
 
         elif (self.__counter_series % 2 == 1):
            self.__pos.x -= self.__speed * delta_time
            if self.__pos.x < 0:
-               self.__counter_series += 1 
+               self.__counter_series += 1
                self.__index_image = 1
     
+    def render (self, destiny):
+        self.__girl.render(destiny, self.__index_image)
         
-    def render(self,destiny):
-        Animation.clock.tick(10)
-        destiny.blit(self.__image, self.__pos, self.__girl_images[self.__index_image])
+
 
 def main(args=None):
     
