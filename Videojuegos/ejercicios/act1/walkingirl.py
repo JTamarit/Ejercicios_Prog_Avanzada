@@ -1,27 +1,22 @@
 import os
 import sys
-
+from config import Config
 import pygame
 
 
 class Animation:
     
-    screen_size = (640,480)
-    fps = 60
-    speed = 0.7
-    image_speed = 20
-    
     def __init__(self):
         pygame.init()
-        self.__screen = pygame.display.set_mode(Animation.screen_size, 0, 32)
-        pygame.display.set_caption("Walking Girl")
+        self.__screen = pygame.display.set_mode(Config.screen_size, 0, 32)
+        pygame.display.set_caption(Config.title)
         self.__fps_clock = pygame.time.Clock()
         self.__walk=Walk(self.__fps_clock)
 
     def run(self):
         self.__running = True
         while self.__running:
-            delta_time = self.__fps_clock.tick(Animation.fps)
+            delta_time = self.__fps_clock.tick(Config.fps)
             self.__process_events()
             self.__update(delta_time)
             self.__render()            
@@ -42,7 +37,7 @@ class Animation:
 
     def __render(self):
 
-        self.__screen.fill((0,0,0))
+        self.__screen.fill(Config.background_color)
         self.__walk.render(self.__screen)
         pygame.display.update()
 
@@ -74,23 +69,18 @@ class Girl:
 class Walk:
 
     def __init__(self, clock):
-        self.__image_size = (64,128)
-        self.__pos=pygame.math.Vector2(0,350)
-        self.__end_pos=pygame.math.Vector2(0,200)
-        self.__total_images = 20
-        self.__images_x_line = 10
-        self.__image_filename=['res','walking_animation.png']
-        self.__index_image=1
-        self.__girl=Girl(self.__image_filename, self.__image_size, self.__total_images,self.__images_x_line, self.__pos, self.__index_image)
-        self.__speed=Animation.speed
-        self.__counter_series=0
-        self.__clock =clock
+
+        self.__pos = pygame.math.Vector2(Config.init_pos)
+        self.__index_image = 1
+        self.__girl = Girl(Config.filename, Config.image_size, Config.total_images, Config.images_x_line, self.__pos, self.__index_image)
+        self.__counter_series = 0
+        self.__clock = clock
         
     def update (self, delta_time):
 
         # Change the speed of girl images.
 
-        if self.__clock.tick(Animation.image_speed):
+        if self.__clock.tick(Config.image_speed):
             self.__index_image += 1
 
         # Change the images way when pos arrives to the end of the screen.
@@ -107,13 +97,13 @@ class Walk:
         # Change the walking way, based on "__counter_series" is even or odd.
 
         if (self.__counter_series % 2 == 0):
-            self.__pos.x += self.__speed * delta_time
+            self.__pos.x += Config.speed * delta_time
             if self.__pos.x > 590:
                 self.__counter_series += 1
                 self.__index_image = 12
 
         elif (self.__counter_series % 2 == 1):
-           self.__pos.x -= self.__speed * delta_time
+           self.__pos.x -= Config.speed * delta_time
            if self.__pos.x < 0:
                self.__counter_series += 1
                self.__index_image = 1
