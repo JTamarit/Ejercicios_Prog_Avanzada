@@ -41,6 +41,7 @@ class Window(QWidget):
         layout.addRow('Title:', QLineEdit(Window.title))
         layout.addRow('Genre:',QLineEdit(Window.genre))
         layout.addRow(self.save, self.exit)
+        Window.audiofile.tag.save()
         self.setLayout(layout)
 
 if __name__ == '__main__':

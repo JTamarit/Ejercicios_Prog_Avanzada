@@ -17,15 +17,21 @@ class Window(QMainWindow):
         self.setFixedSize(QSize(300,200))
         self.load_tags()
 
-        self.button_save= QPushButton('Save')
+        self.button_save= QPushButton('Save Changes')
         self.button_exit= QPushButton('Quit')
+
+        autor = QLineEdit(self.author)
+        album = QLineEdit(self.album)
+        track_num = QLineEdit(self.track_num)
+        title = QLineEdit(self.title)
+        genre = QLineEdit(self.genre)
+
         form_layout = QFormLayout()
-        autor =QLineEdit(self.author)
         form_layout.addRow('Author:', autor)
-        form_layout.addRow('Album:', QLineEdit(self.album))
-        form_layout.addRow('Track num:', QLineEdit(self.track_num))
-        form_layout.addRow('Title:', QLineEdit(self.title))
-        form_layout.addRow('Genre:',QLineEdit(self.genre))
+        form_layout.addRow('Album:', album)
+        form_layout.addRow('Track num:', track_num)
+        form_layout.addRow('Title:', title)
+        form_layout.addRow('Genre:', genre)
         form_layout.addRow(self.button_save, self.button_exit)
         self.button_exit.clicked.connect(self.close)
         self.button_exit.clicked.connect(self.save)
@@ -54,11 +60,11 @@ class Window(QMainWindow):
 
 
     def _update(self, input):
-        print(input)
-        self.audiofile.tag.author=input
-
-    def save(self):
         
+        self.audiofile.tag.author=input
+        print(self.audiofile.tag.author)
+        
+    def save(self): 
         self.audiofile.tag.save()
         print("Saved")
         
