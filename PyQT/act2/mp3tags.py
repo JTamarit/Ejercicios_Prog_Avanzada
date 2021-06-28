@@ -3,7 +3,7 @@ import eyed3
 
 from PyQt6.QtCore import QSize
 from PyQt6.QtWidgets import QApplication, QWidget
-from PyQt6.QtWidgets import QFormLayout, QPushButton, QLineEdit
+from PyQt6.QtWidgets import QFormLayout, QPushButton, QLineEdit, QLabel
 from PyQt6.QtWidgets import QMainWindow
 from PyQt6.QtWidgets import QStatusBar
 
@@ -14,7 +14,7 @@ class Window(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle('MP3 TAGS EDITOR')
-        self.setFixedSize(QSize(300,200))
+        self.setFixedSize(QSize(300,250))
         self.load_tags()
 
         self.button_save= QPushButton('Save Changes')
@@ -26,6 +26,7 @@ class Window(QMainWindow):
         self.cd_num = QLineEdit(str(self.audiofile.tag.track_num[1]))
         self.title = QLineEdit(self.audiofile.tag.title)
         self.genre= QLineEdit(str(self.audiofile.tag.genre))
+        self.date= QLineEdit(str(self.audiofile.tag.original_release_date))
 
 
         form_layout = QFormLayout()
@@ -35,6 +36,7 @@ class Window(QMainWindow):
         form_layout.addRow('CD number:', self.cd_num)
         form_layout.addRow('Title:', self.title)
         form_layout.addRow('Genre:', self.genre)
+        form_layout.addRow('Date:', self.date)
     
         form_layout.addRow(self.button_save, self.button_exit)
         self.button_exit.clicked.connect(self.close)
@@ -46,6 +48,8 @@ class Window(QMainWindow):
         self.cd_num.textChanged.connect(self._update)
         self.title.textChanged.connect(self._update)
         self.genre.textChanged.connect(self._update)
+        self.date.textChanged.connect(self._update)
+    
 
         container = QWidget()
         container.setLayout(form_layout)
@@ -68,7 +72,7 @@ class Window(QMainWindow):
 
         if self.artist.textChanged:
             self.audiofile.tag.artist = input
-            return self.audiofile.tag.artist
+            print (self.audiofile.tag.artist)
 
         elif self.album.textChanged:
             self.audiofile.tag.album = input
@@ -76,11 +80,11 @@ class Window(QMainWindow):
 
         elif self.song_num.textChanged:
             self.audiofile.tag.track_num[0] = input
-            return (self.audiofile.tag.track_num[0])
+            print (self.audiofile.tag.track_num[0])
         
         elif self.cd_num.textChanged:
             self.audiofile.tag.track_num[1] = input
-            return (self.audiofile.tag.track_num[1])
+            print (self.audiofile.tag.track_num[1])
         
 
         elif self.title.textChanged:
@@ -90,6 +94,10 @@ class Window(QMainWindow):
         elif self.genre.textChanged:
             self.audiofile.tag.genre= input
             print(self.audiofile.tag.genre)
+        
+        elif self.date.textChanged:
+            self.audiofile.tag.original_release_date= input
+            print(self.audiofile.tag.original_release_date)
 
     def _save(self):
 
@@ -98,16 +106,21 @@ class Window(QMainWindow):
         self.audiofile.tag.track_num = tuple([(str(self.song_num.text())), str((self.cd_num.text()))])
         self.audiofile.tag.title = self.title.text()
         self.audiofile.tag.genre= self.genre.text()
+        self.audiofile.tag.original_release_date = (str(self.date.text()))
 
         self.audiofile.tag.save()
 
         print("\n Los tags guardados son:\n")
+
+        print((str(self.date.text)))
         
         print(self.audiofile.tag.artist)
         print(self.audiofile.tag.album)
         print(self.audiofile.tag.track_num)
         print(self.audiofile.tag.title)
         print(self.audiofile.tag.genre)
+        print(self.audiofile.tag.original_release_date)
+        
         print("Saved")
         
 
