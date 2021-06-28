@@ -20,22 +20,30 @@ class Window(QMainWindow):
         self.button_save= QPushButton('Save Changes')
         self.button_exit= QPushButton('Quit')
 
-        autor = QLineEdit(self.author)
-        album = QLineEdit(self.album)
-        track_num = QLineEdit(self.track_num)
-        title = QLineEdit(self.title)
-        genre = QLineEdit(self.genre)
+        self.artist = QLineEdit(self.audiofile.tag.artist)
+        self.album = QLineEdit(self.audiofile.tag.album)
+        self.track_num = QLineEdit(str(self.audiofile.tag.track_num))
+        self.title = QLineEdit(self.audiofile.tag.title)
+        self.genre= QLineEdit(str(self.audiofile.tag.genre))
+
 
         form_layout = QFormLayout()
-        form_layout.addRow('Author:', autor)
-        form_layout.addRow('Album:', album)
-        form_layout.addRow('Track num:', track_num)
-        form_layout.addRow('Title:', title)
-        form_layout.addRow('Genre:', genre)
+        form_layout.addRow('Author:',self.artist)
+        form_layout.addRow('Album:', self.album)
+        form_layout.addRow('Track num:', self.track_num)
+        form_layout.addRow('Title:', self.title)
+        form_layout.addRow('Genre:', self.genre)
+
         form_layout.addRow(self.button_save, self.button_exit)
         self.button_exit.clicked.connect(self.close)
-        self.button_exit.clicked.connect(self.save)
-        autor.textChanged.connect(self._update)
+        self.button_save.clicked.connect(self._save)
+
+        self.artist.textChanged.connect(self._update)
+        self.album.textChanged.connect(self._update)
+        self.track_num.textChanged.connect(self._update)
+        self.title.textChanged.connect(self._update)
+        self.genre.textChanged.connect(self._update)
+
         container = QWidget()
         container.setLayout(form_layout)
         self.setCentralWidget(container)
@@ -51,20 +59,34 @@ class Window(QMainWindow):
 
         self.filename= "music/Enter_Sandman.mp3"
         self.audiofile = eyed3.load(self.filename)
-        self.author = self.audiofile.tag.artist 
-        self.album = self.audiofile.tag.album 
-        self.track_num = str(self.audiofile.tag.track_num)
-        self.title = self.audiofile.tag.title
-        self.track = self.audiofile.tag.track_num
-        self.genre = str(self.audiofile.tag.genre)
-
+        
 
     def _update(self, input):
+
+        if self.artist.textChanged:
+            self.audiofile.tag.artist = str(input)
+            print(self.audiofile.tag.artist)
+
+        elif self.album.textChanged:
+            self.audiofile.tag.album = str(input)
+            print(self.audiofile.tag.album)
+
+        elif self.track_num.textChanged:
+            self.audiofile.tag.track_num =str(input)
+            print(self.audiofile.tag.trak_num)
+
+        elif self.title.textChanged:
+            self.audiofile.tag.title = str(input)
+            print(self.audiofile.tag.title)
+
+        elif self.genre.textChanged:
+            self.audiofile.tag.genre = input
+            print(self.audiofile.tag.genre)
+
+
         
-        self.audiofile.tag.author=input
-        print(self.audiofile.tag.author)
-        
-    def save(self): 
+    def _save(self):
+
         self.audiofile.tag.save()
         print("Saved")
         
