@@ -24,7 +24,7 @@ class Window(QMainWindow):
         self.album = QLineEdit(self.audiofile.tag.album)
         self.track_num = QLineEdit(str(self.audiofile.tag.track_num))
         self.title = QLineEdit(self.audiofile.tag.title)
-        self.genre= QLineEdit(str(self.audiofile.tag.genre))
+        self.genre= QLineEdit(str(self.audiofile.tag.genre.name))
 
 
         form_layout = QFormLayout()
@@ -72,22 +72,32 @@ class Window(QMainWindow):
             print(self.audiofile.tag.album)
 
         elif self.track_num.textChanged:
-            self.audiofile.tag.track_num =str(input)
-            print(self.audiofile.tag.trak_num)
+            self.audiofile.tag.track_num =input
+            print(self.audiofile.tag.track_num)
 
         elif self.title.textChanged:
             self.audiofile.tag.title = str(input)
             print(self.audiofile.tag.title)
 
         elif self.genre.textChanged:
-            self.audiofile.tag.genre = input
-            print(self.audiofile.tag.genre)
+            self.audiofile.tag.genre.name = input
+            print(self.audiofile.tag.genre.name)
 
-
-        
     def _save(self):
 
+        self.audiofile.tag.artist = self.artist.text()
+        self.audiofile.tag.album = self.album.text()
+        self.audiofile.tag.track_num = tuple(self.track_num.text())
+        self.audiofile.tag.title = self.title.text()
+        self.audiofile.tag.genre.name = self.genre.text()
+
         self.audiofile.tag.save()
+        print("\n Los tags guardados son:\n")
+        print(self.audiofile.tag.artist)
+        print(self.audiofile.tag.album)
+        print(self.audiofile.tag.track_num)
+        print(self.audiofile.tag.title)
+        print(self.audiofile.tag.genre)
         print("Saved")
         
 
