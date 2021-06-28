@@ -34,7 +34,7 @@ class Window(QMainWindow):
         form_layout.addRow('Track number:', self.song_num)
         form_layout.addRow('Title:', self.title)
         form_layout.addRow('Genre:', self.genre)
-
+    
         form_layout.addRow(self.button_save, self.button_exit)
         self.button_exit.clicked.connect(self.close)
         self.button_save.clicked.connect(self._save)
@@ -66,7 +66,7 @@ class Window(QMainWindow):
 
         if self.artist.textChanged:
             self.audiofile.tag.artist = input
-            print(self.audiofile.tag.artist)
+            return self.audiofile.tag.artist
 
         elif self.album.textChanged:
             self.audiofile.tag.album = input
@@ -74,7 +74,7 @@ class Window(QMainWindow):
 
         elif self.song_num.textChanged:
             self.audiofile.tag.track_num[0] = input
-            print(self.audiofile.tag.track_num[0])
+            return (self.audiofile.tag.track_num[0])
         
 
         elif self.title.textChanged:
@@ -89,14 +89,16 @@ class Window(QMainWindow):
 
         self.audiofile.tag.artist = self.artist.text()
         self.audiofile.tag.album = self.album.text()
-        lista=[self.song_num.text,None]
+        lista=[1, 1]
         tupla =tuple(lista)
-        self.audiofile.tag.track_num = (1,1)
+        self.audiofile.tag.track_num = tupla
         self.audiofile.tag.title = self.title.text()
         self.audiofile.tag.genre= self.genre.text()
 
         self.audiofile.tag.save()
+
         print("\n Los tags guardados son:\n")
+        print (tupla)
         print(self.audiofile.tag.artist)
         print(self.audiofile.tag.album)
         print(self.audiofile.tag.track_num)
