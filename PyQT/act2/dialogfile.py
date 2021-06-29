@@ -23,7 +23,7 @@ class Example(QMainWindow):
         openFile = QAction('Open', self)
         openFile.setShortcut('Ctrl+O')
         openFile.setStatusTip('Open new File')
-        openFile.triggered.connect(self.showDialog)
+        openFile.triggered.connect(self.showFileDialog)
 
         savetags = QAction('Save tags', self)
         savetags.setShortcut('Ctrl+S')
@@ -46,18 +46,18 @@ class Example(QMainWindow):
         self.show()
 
 
-    def showDialog(self):
+    def showFileDialog(self):
 
         home_dir = str(Path.home())
-        fname = QFileDialog.getOpenFileName(self, 'Open file', home_dir)
+        filename = QFileDialog.getOpenFileName(self, 'Open file', home_dir,"Mp3 File (*.mp3)")
 
-        if fname[0]:
+        if filename[0]:
 
-            f = open(fname[0], 'r')
+            file = open(filename[0], 'r')
 
-            with f:
+            with file:
 
-                data = f.read()
+                data = file.read()
                 self.textEdit.setText(data)
     def _save(self):
         pass
