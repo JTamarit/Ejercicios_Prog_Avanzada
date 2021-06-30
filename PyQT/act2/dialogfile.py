@@ -1,7 +1,7 @@
 
 from PyQt6.QtWidgets import (QMainWindow, QTextEdit,
         QFileDialog, QApplication)
-from PyQt6.QtGui import QIcon, QAction
+from PyQt6.QtGui import  QAction
 from pathlib import Path
 import sys
 
@@ -48,8 +48,8 @@ class Example(QMainWindow):
 
     def showFileDialog(self):
 
-        home_dir = str(Path.home())
-        filename = QFileDialog.getOpenFileName(self, 'Open file', home_dir,"Mp3 File (*.mp3)")
+        home_directory = str(Path.home())
+        filename = QFileDialog.getOpenFileName(self, 'Open file', home_directory,"Mp3 File (*.mp3)")
 
         if filename[0]:
 
@@ -59,6 +59,7 @@ class Example(QMainWindow):
 
                 data = file.read()
                 self.textEdit.setText(data)
+
     def _save(self):
         pass
 
