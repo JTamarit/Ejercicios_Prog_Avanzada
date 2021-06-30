@@ -1,9 +1,9 @@
 import sys
 import eyed3
 
-from PyQt6.QtCore import QSize
+from PyQt6.QtCore import  QSize
 from PyQt6.QtWidgets import QApplication, QGridLayout, QHBoxLayout, QVBoxLayout, QWidget
-from PyQt6.QtWidgets import QFileDialog, QPushButton, QLineEdit, QLabel
+from PyQt6.QtWidgets import QFileDialog, QPushButton, QLineEdit, QLabel, QMessageBox
 from PyQt6.QtWidgets import QMainWindow
 from PyQt6.QtWidgets import QStatusBar
 from PyQt6 import QtGui
@@ -16,9 +16,10 @@ class Window(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle('MP3 TAGS EDITOR')
-        self.setFixedSize(QSize(400,250))
+        self.setFixedSize(QSize(450,225))
         
         self._open_file()
+        self._load_tags(self.filename)
 
         self.artist = QLineEdit(self.audiofile.tag.artist)
         self.album = QLineEdit(self.audiofile.tag.album)
@@ -35,9 +36,9 @@ class Window(QMainWindow):
         grid.addWidget(QLabel('Title'),0,0)
         grid.addWidget(self.title,0,1,1,5)
         grid.addWidget(QLabel('Artist'),1,0)
-        grid.addWidget(self.artist,1,1)
-        grid.addWidget(QLabel('Album'),1,2)
-        grid.addWidget(self.album,1,3,1,5)
+        grid.addWidget(self.artist,1,1,1,2)
+        grid.addWidget(QLabel('Album'),1,3)
+        grid.addWidget(self.album,1,4,1,5)
         grid.addWidget(QLabel('Genre'),2,0)
         grid.addWidget(self.genre, 2,1,1,2)
         grid.addWidget(QLabel('Date'),2,3)
@@ -77,10 +78,15 @@ class Window(QMainWindow):
         status.showMessage(self.filename)
         self.setStatusBar(status)
 
-    def load_tags(self,filename):
+    def _load_tags(self,filename):
 
-        self.filename= filename
-        self.audiofile = eyed3.load(self.filename)
+        self.audiofile = eyed3.load(filename)
+    
+    def _open_file(self):
+
+        home_directory = str(Path.home())
+        self.filename = QFileDialog.getOpenFileName(self, 'Open file', home_directory,"Mp3 File (*.mp3)")[0]
+        return self.filename
         
 
     def _update(self, input):
@@ -136,11 +142,6 @@ class Window(QMainWindow):
         print(self.audiofile.tag.genre)
         print(self.audiofile.tag.original_release_date)
         print("Saved")
-
-    def _open_file(self):
-        home_directory = str(Path.home())
-        filename = QFileDialog.getOpenFileName(self, 'Open file', home_directory,"Mp3 File (*.mp3)")[0]
-        self.load_tags(filename)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
