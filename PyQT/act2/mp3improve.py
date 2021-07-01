@@ -19,7 +19,6 @@ class Window(QMainWindow):
         self.setFixedSize(QSize(450,225))
         
         self._open_file()
-        self._load_tags(self.filename)
 
         self.artist = QLineEdit(self.audiofile.tag.artist)
         self.album = QLineEdit(self.audiofile.tag.album)
@@ -49,15 +48,18 @@ class Window(QMainWindow):
         grid.addWidget(self.cd_num,3,4)
 
         horz_layout=QHBoxLayout()
+        self.button_open = QPushButton('Open file')
         self.button_save= QPushButton('Save Changes')
         self.button_exit= QPushButton('Quit')
         
         horz_layout.addStretch(1)
+        horz_layout.addWidget(self.button_open)
         horz_layout.addWidget(self.button_save)
         horz_layout.addWidget(self.button_exit)
     
         self.button_exit.clicked.connect(self.close)
         self.button_save.clicked.connect(self._save)
+        self.button_open.clicked.connect(self._open_file)
     
         vertical_layout.addLayout(grid)
         vertical_layout.addLayout(horz_layout)
@@ -69,24 +71,20 @@ class Window(QMainWindow):
     
     def _create_menu(self):
         self.menu = self.menuBar().addMenu("&File")
-        self.menu.addAction('Open mp3 File', self._open_file)
-        self.menu.addAction('Save',self._save)
+        self.menu.addAction('&Open mp3 File', self._open_file)
+        self.menu.addAction('&Save mp3 tags',self._save)
         self.menu.addAction('&Quit', self.close)
 
     def _create_status_bar(self):
         status = QStatusBar()
         status.showMessage(self.filename)
         self.setStatusBar(status)
-
-    def _load_tags(self,filename):
-
-        self.audiofile = eyed3.load(filename)
     
     def _open_file(self):
-
         home_directory = str(Path.home())
         self.filename = QFileDialog.getOpenFileName(self, 'Open file', home_directory,"Mp3 File (*.mp3)")[0]
-        return self.filename
+        self.audiofile = eyed3.load(self.filename)
+        return self.audiofile
         
 
     def _update(self, input):
