@@ -17,9 +17,12 @@ class Window(QMainWindow):
         super().__init__(parent)
         self.setWindowTitle('MP3 TAGS EDITOR')
         self.setFixedSize(QSize(450,225))
+        try:
+            self.audiofile 
+        except: 
+            self._open_file()
+            
         
-        self._open_file()
-
         self.artist = QLineEdit(self.audiofile.tag.artist)
         self.album = QLineEdit(self.audiofile.tag.album)
         self.song_num = QLineEdit(str(self.audiofile.tag.track_num[0]))
@@ -85,38 +88,7 @@ class Window(QMainWindow):
         self.filename = QFileDialog.getOpenFileName(self, 'Open file', home_directory,"Mp3 File (*.mp3)")[0]
         self.audiofile = eyed3.load(self.filename)
         return self.audiofile
-        
-
-    def _update(self, input):
-
-        if self.artist.textChanged:
-            self.audiofile.tag.artist = input
-            print (self.audiofile.tag.artist)
-
-        elif self.album.textChanged:
-            self.audiofile.tag.album = input
-            print(self.audiofile.tag.album)
-
-        elif self.song_num.textChanged:
-            self.audiofile.tag.track_num[0] = input
-            print (self.audiofile.tag.track_num[0])
-        
-        elif self.cd_num.textChanged:
-            self.audiofile.tag.track_num[1] = input
-            print (self.audiofile.tag.track_num[1])
-        
-
-        elif self.title.textChanged:
-            self.audiofile.tag.title = input
-            print(self.audiofile.tag.title)
-
-        elif self.genre.textChanged:
-            self.audiofile.tag.genre= input
-            print(self.audiofile.tag.genre)
-        
-        elif self.date.textChanged:
-            self.audiofile.tag.original_release_date= input
-            print(self.audiofile.tag.original_release_date)
+     
 
     def _save(self):
 
