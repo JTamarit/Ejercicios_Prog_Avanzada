@@ -113,8 +113,14 @@ class Window(QMainWindow):
         print(self.audiofile.tag.original_release_date)
         print("Saved")
 
+ def main():
+     mp3t = QApplication(sys.argv)
+
+     view = View()
+     view.show()
+
+     sys.exit(mp3t.exec())      
+
+
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    win = Window()
-    win.show()
-    sys.exit(app.exec())
+    main
