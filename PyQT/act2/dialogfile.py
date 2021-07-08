@@ -40,7 +40,10 @@ class Example(QMainWindow):
         fileMenu.addAction(openFile)
         fileMenu.addAction(savetags)
         fileMenu.addAction(quit_app)
-
+        
+        self.textEdit = QTextEdit()
+        self.setCentralWidget(self.textEdit)
+        self.statusBar()
         self.setGeometry(300, 300, 550, 450)
         self.setWindowTitle('File dialog')
         self.show()

@@ -3,9 +3,9 @@ import eyed3
 
 from PyQt6.QtCore import QSize
 from PyQt6.QtWidgets import QApplication, QGridLayout, QHBoxLayout, QVBoxLayout, QWidget
-from PyQt6.QtWidgets import QFormLayout, QPushButton, QLineEdit, QLabel
+from PyQt6.QtWidgets import QPushButton, QLineEdit, QLabel
 from PyQt6.QtWidgets import QMainWindow
-from PyQt6.QtWidgets import QStatusBar
+from PyQt6.QtWidgets import QStatusBar, QMenuBar
 from PyQt6 import QtGui
 
 
@@ -16,6 +16,7 @@ class Window(QMainWindow):
         super().__init__(parent)
         self.setWindowTitle('MP3 TAGS EDITOR')
         self.setFixedSize(QSize(400,250))
+        self.load_tags()
 
         self.artist = QLineEdit(self.audiofile.tag.artist)
         self.album = QLineEdit(self.audiofile.tag.album)
@@ -28,7 +29,7 @@ class Window(QMainWindow):
         vertical_layout = QVBoxLayout()
 
         grid= QGridLayout()
-        grid.setSpacing()
+        grid.setSpacing(2)
         grid.addWidget(QLabel('Title'),0,0)
         grid.addWidget(self.title,0,1,1,5)
         grid.addWidget(QLabel('Artist'),1,0)
@@ -60,7 +61,13 @@ class Window(QMainWindow):
         container = QWidget()
         container.setLayout(vertical_layout)
         self.setCentralWidget(container)
+        self._create_menu()
         self._create_status_bar()
+
+    def _create_menu(self):
+        self._menu = QMenuBar()
+        self._menu_bar=self._menu.addMenu("&Menu")
+        self._menu.addAction('&Grabar', self.close)
 
     def _create_status_bar(self):
         status = QStatusBar()

@@ -64,7 +64,7 @@ class Window(QMainWindow):
 
     def load_tags(self):
 
-        self.filename= "music/Enter_Sandman.mp3"
+        self.filename= "Enter_Sandman.mp3"
         self.audiofile = eyed3.load(self.filename)
         
 
