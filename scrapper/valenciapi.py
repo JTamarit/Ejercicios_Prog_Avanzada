@@ -11,3 +11,4 @@ for endpoint in lista_endpoints:
     print(response.headers['Content-Type'])
     diccionario=response.json()
     print(diccionario)
+    

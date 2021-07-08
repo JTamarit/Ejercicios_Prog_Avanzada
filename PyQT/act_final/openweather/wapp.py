@@ -123,14 +123,15 @@ class Ui_MainWindow(object):
         endpoint=(f"http://api.openweathermap.org/data/2.5/weather?q={city}&units={units}&uk&lang={language}&APPID={api_key}")
         response= requests.get(endpoint)
         diccionario=response.json()
+        print(diccionario)
         icon_weather=diccionario['weather'][0]['icon']
         file_icon=(f"http://openweathermap.org/img/w/{icon_weather}.png")
         f=open('res/weathericon.png','wb')
         response_icon=requests.get(file_icon)
         f.write(response_icon.content)
         f.close
-        self.temp = str(diccionario['main']['temp'])
-        self.temp_feel=str(diccionario['main']['feels_like'])
+        self.temp = str(round(diccionario['main']['temp']))
+        self.temp_feel=str(round(diccionario['main']['feels_like']))
 
 if __name__ == "__main__":
     import sys

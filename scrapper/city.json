@@ -1,16 +1,16 @@
 {
-    'coord': {'lon': -0.8333, 'lat': 39.3333},
+    "coord": {"lon": -0.8333, "lat": 39.3333},
  
-    'weather': [{'id': 801, 'main': 'Clouds', 'description': 'algo de nubes', 'icon': '02n'}],
-    'base': 'stations',
-    'main': {'temp': 21.32, 'feels_like': 21.81, 'temp_min': 20.23, 'temp_max': 23.14, 'pressure': 1019, 'humidity': 88, 'sea_level': 1019, 'grnd_level': 977},
-    'visibility': 10000, 
-    'wind': {'speed': 1.18, 'deg': 18, 'gust': 1.65},
-    'clouds': {'all': 24}, 
-    'dt': 1625701288,
-    'sys': {'type': 2, 'id': 2008731, 'country': 'ES', 'sunrise': 1625719445, 'sunset': 1625772741},
-    'timezone': 7200, 
-    'id': 2509951,
-    'name': 'Valencia', 
-    'cod': 200
+    "weather": [{"id": 801, "main": "Clouds", "description": "algo de nubes", "icon": "02n"}],
+    "base": "stations",
+    "main": {"temp": 21.32, "feels_like": 21.81, "temp_min": 20.23, "temp_max": 23.14, "pressure": 1019, "humidity": 88, "sea_level": 1019, "grnd_level": 977},
+    "visibility": 10000, 
+    "wind": {"speed": 1.18, "deg": 18, "gust": 1.65},
+    "clouds": {"all": 24}, 
+    "dt": 1625701288,
+    "sys": {"type": 2, "id": 2008731, "country": "ES", "sunrise": 1625719445, "sunset": 1625772741},
+    "timezone": 7200, 
+    "id": 2509951,
+    "name": "Valencia", 
+    "cod": 200
 }
