@@ -1,0 +1,67 @@
+{
+    'lat': 39.3333, 
+    'lon': -0.8333, 
+    'timezone': 'Europe/Madrid', 
+    'timezone_offset': 7200, 
+    'current': 
+        {
+            'dt': 1625938660, 
+            'sunrise': 1625892323, 
+            'sunset': 1625945497, 
+            'temp': 28.07, 
+            'feels_like': 27.3, 
+            'pressure': 1014, 
+            'humidity': 33, 
+            'dew_point': 10.3, 
+            'uvi': 0.47, 
+            'clouds': 0, 
+            'visibility': 10000, 
+            'wind_speed': 2.37, 
+            'wind_deg': 96, 
+            'wind_gust': 2.93, 
+            'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}]}, 
+            
+    'daily': [
+            {'dt': 1625918400, 
+                'sunrise': 1625892323, 
+                'sunset': 1625945497, 
+                'moonrise': 1625892480, 
+                'moonset': 1625948160, 
+                'moon_phase': 0, 
+                'temp': {'day': 34.87, 'min': 18.09, 'max': 36.17, 'night': 24.58, 'eve': 28.07, 'morn': 20.44}, 
+                'feels_like': {'day': 33.02, 'night': 24.58, 'eve': 27.3, 'morn': 20.21}, 
+                'pressure': 1016, 
+                'humidity': 21, 
+                'dew_point': 8.65, 
+                'wind_speed': 3.34, 
+                'wind_deg': 131, 
+                'wind_gust': 5.64, 
+                'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}], 
+                'clouds': 0, 
+                'pop': 0, 
+                'uvi': 10.13}, 
+                
+            {'dt': 1626004800, 'sunrise': 1625978763, 'sunset': 1626031873, 'moonrise': 1625982480, 'moonset': 1626037080, 'moon_phase': 0.04, 'temp': {'day': 33.14, 'min': 19.2, 'max': 35.06, 'night': 22.2, 'eve': 29.64, 'morn': 21.02}, 'feels_like': {'day': 33.38, 'night': 22.41, 'eve': 30.25, 'morn': 21.27}, 'pressure': 1015, 'humidity': 37, 'dew_point': 16.02, 'wind_speed': 5.36, 'wind_deg': 107, 'wind_gust': 5.62, 'weather': [{'id': 802, 'main': 'Clouds', 'description': 'scattered clouds', 'icon': '03d'}], 'clouds': 43, 'pop': 0, 'uvi': 10.03}, 
+            {'dt': 1626091200, 'sunrise': 1626065204, 'sunset': 1626118247, 'moonrise': 1626072660, 'moonset': 1626125640, 'moon_phase': 0.08, 'temp': {'day': 38.69, 'min': 21.88, 'max': 38.83, 'night': 22.22, 'eve': 34.82, 'morn': 27.56}, 'feels_like': {'day': 36.31, 'night': 22.43, 'eve': 32.2, 'morn': 26.87}, 'pressure': 1009, 'humidity': 14, 'dew_point': 5.99, 'wind_speed': 12.05, 'wind_deg': 275, 'wind_gust': 16.68, 'weather': [{'id': 801, 'main': 'Clouds', 'description': 'few clouds', 'icon': '02d'}], 'clouds': 16, 'pop': 0, 'uvi': 10.21}, 
+            {'dt': 1626177600, 'sunrise': 1626151647, 'sunset': 1626204619, 'moonrise': 1626163020, 'moonset': 0, 'moon_phase': 0.11, 'temp': {'day': 29.79, 'min': 17.06, 'max': 30.24, 'night': 19.4, 'eve': 24.35, 'morn': 18.69}, 'feels_like': {'day': 28, 'night': 19.09, 'eve': 24.04, 'morn': 18.13}, 'pressure': 1015, 'humidity': 17, 'dew_point': 1.88, 'wind_speed': 4.73, 'wind_deg': 78, 'wind_gust': 5.7, 'weather': [{'id': 802, 'main': 'Clouds', 'description': 'scattered clouds', 'icon': '03d'}], 'clouds': 28, 'pop': 0, 'uvi': 9.51}, 
+            {'dt': 1626264000, 'sunrise': 1626238090, 'sunset': 1626290989, 'moonrise': 1626253440, 'moonset': 1626213840, 'moon_phase': 0.14, 'temp': {'day': 29.04, 'min': 17.48, 'max': 29.29, 'night': 19.89, 'eve': 24.56, 'morn': 18.12}, 'feels_like': {'day': 27.49, 'night': 19.61, 'eve': 24.22, 'morn': 17.37}, 'pressure': 1015, 'humidity': 20, 'dew_point': 3.2, 'wind_speed': 6.27, 'wind_deg': 84, 'wind_gust': 5.35, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}], 'clouds': 0, 'pop': 0.04, 'uvi': 9.17},
+            {'dt': 1626350400, 'sunrise': 1626324534, 'sunset': 1626377357, 'moonrise': 1626343860, 'moonset': 1626301980, 'moon_phase': 0.18, 'temp': {'day': 28.41, 'min': 16.53, 'max': 28.54, 'night': 19.1, 'eve': 25.12, 'morn': 17.96}, 'feels_like': {'day': 27.4, 'night': 18.89, 'eve': 24.86, 'morn': 17.48}, 'pressure': 1017, 'humidity': 30, 'dew_point': 8.8, 'wind_speed': 5.9, 'wind_deg': 94, 'wind_gust': 4.18, 'weather': [{'id': 801, 'main': 'Clouds', 'description': 'few clouds', 'icon': '02d'}], 'clouds': 16, 'pop': 0.04, 'uvi': 10}, 
+            {'dt': 1626436800, 'sunrise': 1626410980, 'sunset': 1626463723, 'moonrise': 1626434340, 'moonset': 1626389940, 'moon_phase': 0.21, 'temp': {'day': 30.6, 'min': 17.53, 'max': 30.6, 'night': 20.24, 'eve': 26.36, 'morn': 19.73}, 'feels_like': {'day': 29.41, 'night': 20.38, 'eve': 26.36, 'morn': 19.3}, 'pressure': 1017, 'humidity': 31, 'dew_point': 11.34, 'wind_speed': 6.31, 'wind_deg': 97, 'wind_gust': 4.87, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}], 'clouds': 0, 'pop': 0, 'uvi': 10}, 
+            {'dt': 1626523200, 'sunrise': 1626497426, 'sunset': 1626550088, 'moonrise': 1626524820, 'moonset': 1626477960, 'moon_phase': 0.25, 'temp': {'day': 35.12, 'min': 18.85, 'max': 35.12, 'night': 21.2, 'eve': 30.11, 'morn': 21.29}, 'feels_like': {'day': 33.9, 'night': 21.46, 'eve': 30.06, 'morn': 21.09}, 'pressure': 1013, 'humidity': 25, 'dew_point': 11.59, 'wind_speed': 3.8, 'wind_deg': 96, 'wind_gust': 5.37, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}], 'clouds': 0, 'pop': 0, 'uvi': 10}
+            ],
+                
+    'alerts': [{'sender_name': 'AEMET. Agencia Estatal de Meteorología', 
+                'event': 'Severe high-temperature warning', 
+                'start': 1626087600, 
+                            
+                'end': 1626119999,
+                            
+                'description': 'Maximum temperature: 41 ºC. Las temperaturas serán más elevadas en poblaciones alejadas de la costa', 
+                'tags': ['Extreme temperature value']}, 
+                {'sender_name': 'AEMET. Agencia Estatal de Meteorología', 
+                'event': 'Extreme high-temperature warning', 
+                'start': 1626087600, 
+                'end': 1626119999, 
+                'description': 'Maximum temperature: 42 ºC. Las temperaturas serán más elevadas en poblaciones alejadas de la costa',
+                'tags': []}]
+ }

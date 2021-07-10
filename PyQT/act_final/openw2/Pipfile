@@ -4,15 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pyqt6 = "*"
-eyed3 = "*"
-pyside6 = "*"
-pygame = "*"
-pathlib = "*"
-beautifulsoup4 = "*"
-requests = "*"
-pyowm = "*"
-pyttsx3 = "*"
 
 [dev-packages]
 
