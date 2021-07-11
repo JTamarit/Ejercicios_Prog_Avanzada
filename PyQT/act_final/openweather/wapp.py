@@ -11,10 +11,12 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox
 
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(429, 351)
+        self.filepath=""
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.pushButton_quit = QtWidgets.QPushButton(self.centralwidget)
@@ -99,7 +101,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Weather App"))
         self.pushButton_quit.setText(_translate("MainWindow", "Quit"))
         self.city.setText(_translate("MainWindow", "City"))
         self.pushButton_current.setText(_translate("MainWindow", "Current Weather"))
@@ -111,28 +113,44 @@ class Ui_MainWindow(object):
     def _update(self):
         self._scrap()
         _translate = QtCore.QCoreApplication.translate
-        self.icon.setPixmap(QtGui.QPixmap(os.path.join("res/weathericon.png")))
+        self.icon.setPixmap(QtGui.QPixmap(os.path.join(self.filepath)))
         self.label_temp.setText(_translate("MainWindow", self.temp))
         self.label_feeltemp.setText(_translate("MainWindow", self.temp_feel))
+
+    def _show_popup(self):
+        dlg = QMessageBox()
+        dlg.setWindowTitle("Error") 
+        dlg.setText("City can't be null")
+        dlg.setIcon(QMessageBox.Icon.Warning)
+        button = dlg.exec()
+        
+        
 
     def _scrap(self):
 
         city=str(self.lineEditCity.text())
-        units="metric"
-        api_key ="9a16a8e5458b6fdb0d040e46ee221bca"
-        language="es"
-        endpoint=(f"http://api.openweathermap.org/data/2.5/weather?q={city}&units={units}&uk&lang={language}&APPID={api_key}")
-        response= requests.get(endpoint)
-        diccionario=response.json()
-        print(diccionario)
-        icon_weather=diccionario['weather'][0]['icon']
-        file_icon=(f"http://openweathermap.org/img/w/{icon_weather}.png")
-        f=open('res/weathericon.png','wb')
-        response_icon=requests.get(file_icon)
-        f.write(response_icon.content)
-        f.close
-        self.temp = str(round(diccionario['main']['temp']))
-        self.temp_feel=str(round(diccionario['main']['feels_like']))
+        if city == "":
+            self._show_popup()
+            self.temp=""
+            self.temp_feel=""
+            self.filepath=""
+        else:
+            units="metric"
+            api_key ="9a16a8e5458b6fdb0d040e46ee221bca"
+            language="es"
+            endpoint=(f"http://api.openweathermap.org/data/2.5/weather?q={city}&units={units}&uk&lang={language}&APPID={api_key}")
+            response= requests.get(endpoint)
+            diccionario=response.json()
+            print(diccionario)
+            icon_weather=diccionario['weather'][0]['icon']
+            file_icon=(f"http://openweathermap.org/img/w/{icon_weather}.png")
+            f=open('res/weathericon.png','wb')
+            response_icon=requests.get(file_icon)
+            f.write(response_icon.content)
+            f.close
+            self.temp = str(round(diccionario['main']['temp']))
+            self.temp_feel=str(round(diccionario['main']['feels_like']))
+            self.filepath="res/weathericon.png"
 
 if __name__ == "__main__":
     import sys
