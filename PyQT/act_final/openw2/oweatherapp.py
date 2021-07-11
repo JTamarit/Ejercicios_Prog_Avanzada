@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_View(object):
     def setupUi(self, View):
         View.setObjectName("View")
-        View.resize(1023, 828)
+        View.setFixedSize(1023, 828)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(229, 107, 73))
         brush.setStyle(QtCore.Qt.BrushStyle.SolidPattern)
@@ -2620,7 +2620,7 @@ class Ui_View(object):
 
     def retranslateUi(self, View):
         _translate = QtCore.QCoreApplication.translate
-        View.setWindowTitle(_translate("View", "View"))
+        View.setWindowTitle(_translate("View", "Open Weather App"))
         self.pushButton_Quit.setStatusTip(_translate("View", "Quit application"))
         self.pushButton_Quit.setText(_translate("View", "Quit"))
         self.label_lon.setText(_translate("View", "lon"))

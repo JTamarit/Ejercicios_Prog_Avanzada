@@ -8,6 +8,7 @@
 import os
 import requests
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import QMessageBox
 
 
 class Ui_MainWindow(object):
