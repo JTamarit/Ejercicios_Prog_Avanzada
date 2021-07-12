@@ -1,6 +1,7 @@
 import sys
 import os
 import requests
+import cv2
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -119,8 +120,12 @@ class Ui_MainWindow(object):
             self.filepath=""
         else:
             self._set_city(city)
-            self._get_parameters()
+            self._get_parameters_current()
+            self._scrapper_7_forecast()
+            self._get_parameters_forecast()
+            
         self._set_labels()
+
     
     def _clean_labels(self):
         
@@ -129,39 +134,62 @@ class Ui_MainWindow(object):
         self.temp_feel=""
         self.filepath=""
         self._set_labels()
-        
 
-    def _scrapper(self,city,units,language,api_key):
-        endpoint=(f"http://api.openweathermap.org/data/2.5/weather?q={city}&units={units}&uk&lang={language}&APPID={api_key}")
-        response= requests.get(endpoint)
-        self.diccionario=response.json()
-    
     def _set_city(self,city):
+        self.units="metric"
+        self.api_key ="9a16a8e5458b6fdb0d040e46ee221bca"
+        self.language="es"
+        self._scrapper_current_weather(city)
 
-        units="metric"
-        api_key ="9a16a8e5458b6fdb0d040e46ee221bca"
-        language="es"
-        self._scrapper(city,units,language,api_key)
+    def _scrapper_current_weather(self,city):
+        # Get current weather and coord of the city.
         
-    def _get_parameters(self):
-
-        diccionario=self.diccionario
+        endpoint=(f"http://api.openweathermap.org/data/2.5/weather?q={city}&units={self.units}&uk&lang={self.language}&APPID={self.api_key}")
+        response= requests.get(endpoint)
+        self.dict_current=response.json()
+        
+    def _scrapper_7_forecast(self):
+         # Get 7 days forescast weather
         try:
-            icon_weather=diccionario['weather'][0]['icon']
+            self.lat=self.dict_current['coord']['lat']
+        except KeyError:
+            return
+        self.lon=self.dict_current['coord']['lon']
+        endpoint_7days=(f"https://api.openweathermap.org/data/2.5/onecall?lat={self.lat}&lon={self.lon}&units={self.units}&exclude=hourly,minutely&appid={self.api_key}")
+        response_7days= requests.get(endpoint_7days)
+        self.dict_7days=response_7days.json()
+        print(self.dict_7days)       
+        
+    def _get_parameters_current(self):
+
+        try:
+            icon_weather=self.dict_current['weather'][0]['icon']
         except KeyError:
             self._show_popup_city_notfound()
             self._clean_labels()
             return
-
         file_icon=(f"http://openweathermap.org/img/w/{icon_weather}.png")
-        ruta=os.path.join("res","weathericon.png")
-        f=open(ruta,'wb')
+        _path=os.path.join("res","weathericon.png")
+        f=open(_path,'wb')
         response_icon=requests.get(file_icon)
         f.write(response_icon.content)
         f.close
-        self.temp = str(round(diccionario['main']['temp']))
-        self.temp_feel=str(round(diccionario['main']['feels_like']))
-        self.filepath="res/weathericon.png"
+        self.temp = str(round(self.dict_current['main']['temp']))
+        self.temp_feel=str(round(self.dict_current['main']['feels_like']))
+        self.filepath=_path
+        
+        
+
+        
+
+    def _get_parameters_forecast(self):
+        
+        try:
+            self.dict_7days
+        except AttributeError:
+            return
+        print(self.dict_7days)  
+        
 
     def _set_labels(self):
         _translate = QtCore.QCoreApplication.translate
