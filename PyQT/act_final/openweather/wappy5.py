@@ -1,13 +1,10 @@
 import sys
 import os
 import requests
-import cv2
-
+import datetime
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox
-
-
 
 class Ui_MainWindow(object):
 
@@ -188,7 +185,24 @@ class Ui_MainWindow(object):
             self.dict_7days
         except AttributeError:
             return
-        print(self.dict_7days)  
+
+        print(self.dict_7days)
+        
+        # Alerts
+        try:
+            print(self.dict_7days['alerts'])
+        except KeyError:
+            print("There are no alerts at the moment")
+            return  
+
+        print(self.dict_7days['alerts'][0]['sender_name'])
+        timestamp = datetime.datetime.fromtimestamp(self.dict_7days['alerts'][0]['start'])
+        print(f"Starts: {timestamp.strftime('%d-%m-%Y %H:%M')}")
+        timestamp = datetime.datetime.fromtimestamp(self.dict_7days['alerts'][0]['end'])
+        print(f"Ends: {timestamp.strftime('%d-%m-%Y %H:%M')}")
+        print(self.dict_7days['alerts'][0]['event'])
+        print(self.dict_7days['alerts'][0]['description'])
+  
         
 
     def _set_labels(self):
