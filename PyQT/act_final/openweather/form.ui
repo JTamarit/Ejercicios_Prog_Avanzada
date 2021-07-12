@@ -14,20 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton_quit">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>230</y>
-      <width>61</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Quit</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -68,8 +55,14 @@
          <family>Futura</family>
         </font>
        </property>
+       <property name="statusTip">
+        <string>Push to get current weather. Shortcut: INTRO</string>
+       </property>
        <property name="text">
         <string>Current Weather</string>
+       </property>
+       <property name="shortcut">
+        <string>Return</string>
        </property>
       </widget>
      </item>
@@ -157,16 +150,57 @@
      </item>
     </layout>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>429</width>
-     <height>24</height>
-    </rect>
-   </property>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>240</y>
+      <width>158</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton_clear">
+       <property name="statusTip">
+        <string>Push for cleanning labels. Shortcut: CTRL + L</string>
+       </property>
+       <property name="text">
+        <string>Clear</string>
+       </property>
+       <property name="shortcut">
+        <string>Meta+L</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_quit">
+       <property name="statusTip">
+        <string>Quit Application. Shortcut: CTRL + S</string>
+       </property>
+       <property name="text">
+        <string>Quit</string>
+       </property>
+       <property name="shortcut">
+        <string>Meta+S</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
@@ -197,6 +231,22 @@
     <hint type="sourcelabel">
      <x>310</x>
      <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_clear</sender>
+   <signal>clicked()</signal>
+   <receiver>centralwidget</receiver>
+   <slot>update()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>322</x>
+     <y>269</y>
     </hint>
     <hint type="destinationlabel">
      <x>214</x>
