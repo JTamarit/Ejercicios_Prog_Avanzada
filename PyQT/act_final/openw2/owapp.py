@@ -399,7 +399,7 @@ class Ui_View(object):
         font.setFamily("Verdana")
         self.label_f_day_2_icon.setFont(font)
         self.label_f_day_2_icon.setText("")
-        self.label_f_day_2_icon.setPixmap(QtGui.QPixmap("res/weathericon.png"))
+        self.label_f_day_2_icon.setPixmap(QtGui.QPixmap(""))
         self.label_f_day_2_icon.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_f_day_2_icon.setObjectName("label_f_day_2_icon")
         self.verticalLayout_Forecast_day_2.addWidget(self.label_f_day_2_icon)
@@ -594,7 +594,7 @@ class Ui_View(object):
         palette.setBrush(QtGui.QPalette.ColorGroup.Disabled, QtGui.QPalette.ColorRole.WindowText, brush)
         self.line_separator_5.setPalette(palette)
         font = QtGui.QFont()
-        font.setFamily("Gill Sans")
+        font.setFamily("Verdana")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
@@ -724,7 +724,7 @@ class Ui_View(object):
         self.horizontalLayout_Current_temp.setObjectName("horizontalLayout_Current_temp")
         self.label_d_today_icon = QtWidgets.QLabel(self.layoutWidget2)
         self.label_d_today_icon.setText("")
-        self.label_d_today_icon.setPixmap(QtGui.QPixmap("res/weathericon.png"))
+        self.label_d_today_icon.setPixmap(QtGui.QPixmap(""))
         self.label_d_today_icon.setObjectName("label_d_today_icon")
         self.horizontalLayout_Current_temp.addWidget(self.label_d_today_icon)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
@@ -868,7 +868,7 @@ class Ui_View(object):
         font.setFamily("Verdana")
         self.label_f_day_1_icon.setFont(font)
         self.label_f_day_1_icon.setText("")
-        self.label_f_day_1_icon.setPixmap(QtGui.QPixmap("res/weathericon.png"))
+        self.label_f_day_1_icon.setPixmap(QtGui.QPixmap(""))
         self.label_f_day_1_icon.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_f_day_1_icon.setObjectName("label_f_day_1_icon")
         self.verticalLayout_Forecast_day_1.addWidget(self.label_f_day_1_icon)
@@ -1523,65 +1523,65 @@ class Ui_View(object):
 
     def retranslateUi(self, View):
         _translate = QtCore.QCoreApplication.translate
-        View.setWindowTitle(_translate("View", "View"))
-        self.label_d_country.setText(_translate("View", "es"))
+        View.setWindowTitle(_translate("View", "Open Weather App"))
+        self.label_d_country.setText(_translate("View", ""))
         self.label_lon.setText(_translate("View", "lon"))
-        self.label_d_lon.setText(_translate("View", "39"))
+        self.label_d_lon.setText(_translate("View", ""))
         self.label_lat.setText(_translate("View", "lat"))
-        self.label_d_lat.setText(_translate("View", "0"))
+        self.label_d_lat.setText(_translate("View", ""))
         self.label_Today.setStatusTip(_translate("View", "TODAY: Current weather"))
         self.label_Today.setText(_translate("View", "Today"))
         self.label_Forecast.setStatusTip(_translate("View", "FORECAST: You can see forescat weather for the rest of the week."))
         self.label_Forecast.setText(_translate("View", "Forecast"))
         self.label_fore_Tm_day_2.setText(_translate("View", "Tmax"))
-        self.label_d_fore_Tm_day_2.setText(_translate("View", "22"))
+        self.label_d_fore_Tm_day_2.setText(_translate("View", ""))
         self.label_Degrees_Tmax_Fore_day_2.setText(_translate("View", "ºC"))
         self.label_fore_Tmin_day_2.setText(_translate("View", "Tmin"))
-        self.label_d_fore_Tmin_day_2.setText(_translate("View", "11"))
+        self.label_d_fore_Tmin_day_2.setText(_translate("View", ""))
         self.label_Degrees_Tmin_Fore_day_2.setText(_translate("View", "ºC"))
         self.label_UVI_Fore_day_2.setText(_translate("View", "UVI"))
-        self.label_d_fore_UVI_day_2.setText(_translate("View", "3"))
+        self.label_d_fore_UVI_day_2.setText(_translate("View", ""))
         self.label_Alerts.setStatusTip(_translate("View", "ALERTS: If there is a special alert you will see in this area"))
         self.label_Alerts.setText(_translate("View", "Alerts"))
         self.label_City.setText(_translate("View", "City ==>"))
         self.lineEdit_City.setStatusTip(_translate("View", "Enter the name of a city"))
-        self.lineEdit_City.setText(_translate("View", "Valencia"))
+        self.lineEdit_City.setText(_translate("View", ""))
         self.pushButton_Go.setStatusTip(_translate("View", "GO WEATHER: Push for getting info weather en forecast. Shortcut: INTRO"))
         self.pushButton_Go.setText(_translate("View", "Go Weather"))
         self.pushButton_Go.setShortcut(_translate("View", "Return"))
         self.label_d_T_today.setStatusTip(_translate("View", "Current temperature"))
-        self.label_d_T_today.setText(_translate("View", "20"))
+        self.label_d_T_today.setText(_translate("View", ""))
         self.label_Degrees_Today.setText(_translate("View", "ºC"))
         self.label_feels_like.setText(_translate("View", "Feels Like"))
-        self.label_d_feels_today.setText(_translate("View", "19"))
+        self.label_d_feels_today.setText(_translate("View", ""))
         self.label_Degrees_Today_f.setText(_translate("View", "ºC"))
         self.label_fore_Tm_day_1.setText(_translate("View", "Tmax"))
-        self.label_d_fore_Tm_day_1.setText(_translate("View", "21"))
+        self.label_d_fore_Tm_day_1.setText(_translate("View", ""))
         self.label_Degrees_Tmax_Fore_day_1.setText(_translate("View", "ºC"))
         self.label_fore_Tmin_day_1.setText(_translate("View", "Tmin"))
-        self.label_d_fore_Tmin_day_1.setText(_translate("View", "10"))
+        self.label_d_fore_Tmin_day_1.setText(_translate("View", ""))
         self.label_Degrees_Tmin_Fore_day_1.setText(_translate("View", "ºC"))
         self.label_UVI_Fore_day_1.setText(_translate("View", "UVI"))
-        self.label_d_fore_UVI_day_1.setText(_translate("View", "2"))
+        self.label_d_fore_UVI_day_1.setText(_translate("View", ""))
         self.label_Humidity_today.setText(_translate("View", "Humidity"))
-        self.label_d_humidity_today.setText(_translate("View", "85"))
+        self.label_d_humidity_today.setText(_translate("View", ""))
         self.label_percert_humidity.setText(_translate("View", "%"))
         self.label_UVI_today.setText(_translate("View", "UVI"))
-        self.label_d_uvi_today.setText(_translate("View", "10"))
+        self.label_d_uvi_today.setText(_translate("View", ""))
         self.label_Wspeed_today.setText(_translate("View", "Wind Speed"))
-        self.label_d_WSpeed_today.setText(_translate("View", "3,4"))
+        self.label_d_WSpeed_today.setText(_translate("View", ""))
         self.label_Km_WSpeed_today.setText(_translate("View", "Km/h"))
         self.label_Sunrise_today.setText(_translate("View", "Sunrise"))
-        self.label_d_Sunrise_today.setText(_translate("View", "06:30"))
+        self.label_d_Sunrise_today.setText(_translate("View", ""))
         self.label_Sunset_today.setText(_translate("View", "Sunset"))
-        self.label_d_Sunset_today.setText(_translate("View", "21:20"))
-        self.label_d_alerts_sender.setText(_translate("View", "AEMET"))
-        self.label_d_alerts_start.setText(_translate("View", "01-08-2021 7:00"))
-        self.label_d_alerts_ends.setText(_translate("View", "01-08-2021 21:00"))
-        self.label_d_alerts_event.setText(_translate("View", "Very High Temperature"))
-        self.label_d_alerts_description.setText(_translate("View", "Aviso por temperaturas muy elevadas en la costa"))
-        self.label_d_Fore_day_1.setText(_translate("View","Dia 1"))
-        self.label_d_Fore_day_2.setText(_translate("View","Dia 2"))
+        self.label_d_Sunset_today.setText(_translate("View", ""))
+        self.label_d_alerts_sender.setText(_translate("View", ""))
+        self.label_d_alerts_start.setText(_translate("View", ""))
+        self.label_d_alerts_ends.setText(_translate("View", ""))
+        self.label_d_alerts_event.setText(_translate("View", ""))
+        self.label_d_alerts_description.setText(_translate("View", ""))
+        self.label_d_Fore_day_1.setText(_translate("View",""))
+        self.label_d_Fore_day_2.setText(_translate("View",""))
         self.pushButton_Clear.setStatusTip(_translate("View", "CLEAR: Clear data labels.  Shortcut: SHIFT+COMMAND+C"))
         self.pushButton_Clear.setText(_translate("View", "Clear"))
         self.pushButton_Clear.setShortcut(_translate("View", "Ctrl+Shift+C"))
@@ -1597,6 +1597,8 @@ class Ui_View(object):
         if city == "":
             self._show_popup_null_label()
             self._clean_labels()
+            self._clean_labels_alerts()
+            self._set_labels()
         else:
             self._set_city(city)
             self._get_parameters_current()
@@ -1607,6 +1609,7 @@ class Ui_View(object):
 
     def _button_clean_labels(self):
         self._clean_labels()
+        self._clean_labels_alerts()
         self._set_labels()
 
     def _clean_labels(self):
@@ -1633,6 +1636,9 @@ class Ui_View(object):
         self.label_fore_Tmin_day_2=""
         self.label_fore_UVI_day_2=""
         self.label_feels_today=""
+
+    def _clean_labels_alerts(self):
+
         self.label_alerts_sender=""
         self.label_alerts_start=""
         self.label_alerts_ends=""
@@ -1671,7 +1677,10 @@ class Ui_View(object):
         except KeyError:
             self._show_popup_city_notfound()
             self._clean_labels()
+            self._clean_labels_alerts()
+            self._set_labels()
             return
+
         file_icon=(f"http://openweathermap.org/img/w/{icon_weather}.png")
         _path=os.path.join("res","weathericon.png")
         f=open(_path,'wb')
@@ -1687,7 +1696,7 @@ class Ui_View(object):
         self.label_T_today=str(round(self.dict_current['main']['temp']))
         self.label_feels_today=str(round(self.dict_current['main']['feels_like']))
         self.label_humidity_today=str(self.dict_current['main']['humidity'])
-        self.label_WSpeed_today=str((self.dict_current['wind']['speed'])*3600/1000)
+        self.label_WSpeed_today=str(round((self.dict_current['wind']['speed'])*3600/1000))
         timestamp = datetime.datetime.fromtimestamp(self.dict_current['sys']['sunrise'])
         self.label_Sunrise_today=(timestamp.strftime('%H:%M'))
         timestamp = datetime.datetime.fromtimestamp(self.dict_current['sys']['sunset'])
@@ -1699,6 +1708,7 @@ class Ui_View(object):
         try:
             self.dict_7days
         except AttributeError:
+            
             return
         self.label_uvi_today=str(self.dict_7days['current']['uvi'])
         icon_weather_fore_1=self.dict_7days['daily'][1]['weather'][0]['icon']
@@ -1728,32 +1738,24 @@ class Ui_View(object):
         timestamp = datetime.datetime.fromtimestamp(self.dict_7days['daily'][2]['dt'])
         self.label_Fore_day_2 = str(timestamp.strftime('%d-%m'))
 
-        self.label_alerts_sender=""
-        self.label_alerts_start=""
-        self.label_alerts_ends=""
-        self.label_alerts_event=""
-        self.label_alerts_description=""
-
+        
         # Alerts
         try:
             print(self.dict_7days['alerts'])
         except KeyError:
-            print("There are no alerts at the moment")
-            return  
-        self.label_alerts_sender=self.dict_7days['alerts']['sender_name']
-        self.label_alerts_start=self.dict_7days['alerts']['start']
-        self.label_alerts_ends=self.dict_7days['alerts']['end']
-        self.label_alerts_event=self.dict_7days['alerts']['event']
-        self.label_alerts_description=self.dict_7days['alerts']['description']
-        print(self.dict_7days['alerts'][0]['sender_name'])
+            print("There are any alerts at the moment")
+            self._clean_labels_alerts()
+            return
+
+        self.label_alerts_sender=self.dict_7days['alerts'][0]['sender_name']
+        self.label_alerts_event=self.dict_7days['alerts'][0]['event']
+        self.label_alerts_description=self.dict_7days['alerts'][0]['description']
+    
         timestamp = datetime.datetime.fromtimestamp(self.dict_7days['alerts'][0]['start'])
-        print(f"Starts: {timestamp.strftime('%d-%m-%Y %H:%M')}")
+        self.label_alerts_start=str(timestamp.strftime('%d-%m-%Y %H:%M'))
         timestamp = datetime.datetime.fromtimestamp(self.dict_7days['alerts'][0]['end'])
-        print(f"Ends: {timestamp.strftime('%d-%m-%Y %H:%M')}")
-        print(self.dict_7days['alerts'][0]['event'])
-        print(self.dict_7days['alerts'][0]['description'])
-  
-        
+        self.label_alerts_ends=str(timestamp.strftime('%d-%m-%Y %H:%M'))
+
 
     def _set_labels(self):
 
