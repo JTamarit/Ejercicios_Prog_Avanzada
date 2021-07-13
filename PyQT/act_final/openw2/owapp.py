@@ -1580,6 +1580,8 @@ class Ui_View(object):
         self.label_d_alerts_ends.setText(_translate("View", "01-08-2021 21:00"))
         self.label_d_alerts_event.setText(_translate("View", "Very High Temperature"))
         self.label_d_alerts_description.setText(_translate("View", "Aviso por temperaturas muy elevadas en la costa"))
+        self.label_d_Fore_day_1.setText(_translate("View","Dia 1"))
+        self.label_d_Fore_day_2.setText(_translate("View","Dia 2"))
         self.pushButton_Clear.setStatusTip(_translate("View", "CLEAR: Clear data labels.  Shortcut: SHIFT+COMMAND+C"))
         self.pushButton_Clear.setText(_translate("View", "Clear"))
         self.pushButton_Clear.setShortcut(_translate("View", "Ctrl+Shift+C"))
@@ -1622,7 +1624,8 @@ class Ui_View(object):
         self.label_WSpeed_today=""
         self.label_Sunrise_today=""
         self.label_Sunset_today=""
-
+        self.label_Fore_day_1=""
+        self.label_Fore_day_2=""
         self.label_fore_Tm_day_1=""
         self.label_fore_Tmin_day_1=""
         self.label_fore_UVI_day_1=""
@@ -1630,16 +1633,14 @@ class Ui_View(object):
         self.label_fore_Tmin_day_2=""
         self.label_fore_UVI_day_2=""
         self.label_feels_today=""
-
         self.label_alerts_sender=""
         self.label_alerts_start=""
         self.label_alerts_ends=""
         self.label_alerts_event=""
         self.label_alerts_description=""
-        
-        
 
     def _set_city(self,city):
+
         self.units="metric"
         self.api_key ="9a16a8e5458b6fdb0d040e46ee221bca"
         self.language="es"
@@ -1661,8 +1662,7 @@ class Ui_View(object):
         self.lon=self.dict_current['coord']['lon']
         endpoint_7days=(f"https://api.openweathermap.org/data/2.5/onecall?lat={self.lat}&lon={self.lon}&units={self.units}&exclude=hourly,minutely&appid={self.api_key}")
         response_7days= requests.get(endpoint_7days)
-        self.dict_7days=response_7days.json()
-        print(self.dict_7days)       
+        self.dict_7days=response_7days.json()      
         
     def _get_parameters_current(self):
 
@@ -1681,6 +1681,17 @@ class Ui_View(object):
         self.temp = str(round(self.dict_current['main']['temp']))
         self.temp_feel=str(round(self.dict_current['main']['feels_like']))
         self.filepath=_path
+        self.label_country=self.dict_current['sys']['country']
+        self.label_lon=str(self.dict_current['coord']['lon'])
+        self.label_lat=str(self.dict_current['coord']['lat'])
+        self.label_T_today=str(round(self.dict_current['main']['temp']))
+        self.label_feels_today=str(round(self.dict_current['main']['feels_like']))
+        self.label_humidity_today=str(self.dict_current['main']['humidity'])
+        self.label_WSpeed_today=str((self.dict_current['wind']['speed'])*3600/1000)
+        timestamp = datetime.datetime.fromtimestamp(self.dict_current['sys']['sunrise'])
+        self.label_Sunrise_today=(timestamp.strftime('%H:%M'))
+        timestamp = datetime.datetime.fromtimestamp(self.dict_current['sys']['sunset'])
+        self.label_Sunset_today=(timestamp.strftime('%H:%M'))
            
 
     def _get_parameters_forecast(self):
@@ -1689,8 +1700,39 @@ class Ui_View(object):
             self.dict_7days
         except AttributeError:
             return
+        self.label_uvi_today=str(self.dict_7days['current']['uvi'])
+        icon_weather_fore_1=self.dict_7days['daily'][1]['weather'][0]['icon']
+        file_icon1=(f"http://openweathermap.org/img/w/{icon_weather_fore_1}.png")
+        _path1=os.path.join("res","weathericon_fore_1.png")
+        f=open(_path1,'wb')
+        response_icon=requests.get(file_icon1)
+        f.write(response_icon.content)
+        f.close
+        self.filepathf1=_path1
+        icon_weather_fore_2=self.dict_7days['daily'][2]['weather'][0]['icon']
+        file_icon2=(f"http://openweathermap.org/img/w/{icon_weather_fore_2}.png")
+        _path2=os.path.join("res","weathericon_fore_2.png")
+        f=open(_path2,'wb')
+        response_icon=requests.get(file_icon2)
+        f.write(response_icon.content)
+        f.close
+        self.filepathf2=_path2
+        self.label_fore_Tm_day_1 = str(round(self.dict_7days['daily'][1]['temp']['max']))
+        self.label_fore_Tmin_day_1 = str(round(self.dict_7days['daily'][1]['temp']['min']))
+        self.label_fore_UVI_day_1 = str(self.dict_7days['daily'][1]['uvi'])
+        self.label_fore_Tm_day_2 = str(round(self.dict_7days['daily'][2]['temp']['max']))
+        self.label_fore_Tmin_day_2 = str(round(self.dict_7days['daily'][2]['temp']['min']))
+        self.label_fore_UVI_day_2 = str(self.dict_7days['daily'][2]['uvi'])
+        timestamp = datetime.datetime.fromtimestamp(self.dict_7days['daily'][1]['dt'])
+        self.label_Fore_day_1 = str(timestamp.strftime('%d-%m'))
+        timestamp = datetime.datetime.fromtimestamp(self.dict_7days['daily'][2]['dt'])
+        self.label_Fore_day_2 = str(timestamp.strftime('%d-%m'))
 
-        print(self.dict_7days)
+        self.label_alerts_sender=""
+        self.label_alerts_start=""
+        self.label_alerts_ends=""
+        self.label_alerts_event=""
+        self.label_alerts_description=""
 
         # Alerts
         try:
@@ -1698,7 +1740,11 @@ class Ui_View(object):
         except KeyError:
             print("There are no alerts at the moment")
             return  
-
+        self.label_alerts_sender=self.dict_7days['alerts']['sender_name']
+        self.label_alerts_start=self.dict_7days['alerts']['start']
+        self.label_alerts_ends=self.dict_7days['alerts']['end']
+        self.label_alerts_event=self.dict_7days['alerts']['event']
+        self.label_alerts_description=self.dict_7days['alerts']['description']
         print(self.dict_7days['alerts'][0]['sender_name'])
         timestamp = datetime.datetime.fromtimestamp(self.dict_7days['alerts'][0]['start'])
         print(f"Starts: {timestamp.strftime('%d-%m-%Y %H:%M')}")
@@ -1732,11 +1778,14 @@ class Ui_View(object):
         self.label_d_WSpeed_today.setText(_translate("View", self.label_WSpeed_today))
         self.label_d_Sunrise_today.setText(_translate("View", self.label_Sunrise_today))
         self.label_d_Sunset_today.setText(_translate("View", self.label_Sunset_today))
+
         self.label_d_alerts_sender.setText(_translate("View",self.label_alerts_sender))
         self.label_d_alerts_start.setText(_translate("View",self.label_alerts_start))
         self.label_d_alerts_ends.setText(_translate("View",self.label_alerts_ends))
         self.label_d_alerts_event.setText(_translate("View",self.label_alerts_event))
-        self.label_d_alerts_description.setText(_translate("View",self.label_alerts_description)) 
+        self.label_d_alerts_description.setText(_translate("View",self.label_alerts_description))
+        self.label_d_Fore_day_1.setText(_translate("View",self.label_Fore_day_1))
+        self.label_d_Fore_day_2.setText(_translate("View",self.label_Fore_day_2))
 
         
 
