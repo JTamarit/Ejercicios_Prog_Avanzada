@@ -46,6 +46,9 @@
          <family>Futura</family>
         </font>
        </property>
+       <property name="statusTip">
+        <string>Enter City Name</string>
+       </property>
       </widget>
      </item>
      <item row="0" column="3">

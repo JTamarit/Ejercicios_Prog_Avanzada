@@ -6,6 +6,7 @@ import datetime
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox
 
+
 class Ui_View(object):
     def setupUi(self, View):
         View.setObjectName("View")
@@ -1344,7 +1345,6 @@ class Ui_View(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_d_alerts_sender.setFont(font)
-        self.label_d_alerts_sender.setText("")
         self.label_d_alerts_sender.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_d_alerts_sender.setObjectName("label_d_alerts_sender")
         self.horizontalLayout_26.addWidget(self.label_d_alerts_sender)
@@ -1368,7 +1368,6 @@ class Ui_View(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_d_alerts_start.setFont(font)
-        self.label_d_alerts_start.setText("")
         self.label_d_alerts_start.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_d_alerts_start.setObjectName("label_d_alerts_start")
         self.horizontalLayout_26.addWidget(self.label_d_alerts_start)
@@ -1392,7 +1391,6 @@ class Ui_View(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_d_alerts_ends.setFont(font)
-        self.label_d_alerts_ends.setText("")
         self.label_d_alerts_ends.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_d_alerts_ends.setObjectName("label_d_alerts_ends")
         self.horizontalLayout_26.addWidget(self.label_d_alerts_ends)
@@ -1416,7 +1414,6 @@ class Ui_View(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_d_alerts_event.setFont(font)
-        self.label_d_alerts_event.setText("")
         self.label_d_alerts_event.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_d_alerts_event.setObjectName("label_d_alerts_event")
         self.horizontalLayout_26.addWidget(self.label_d_alerts_event)
@@ -1439,7 +1436,6 @@ class Ui_View(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_d_alerts_description.setFont(font)
-        self.label_d_alerts_description.setText("")
         self.label_d_alerts_description.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_d_alerts_description.setObjectName("label_d_alerts_description")
         self.verticalLayout_Alerts.addWidget(self.label_d_alerts_description)
@@ -1527,7 +1523,7 @@ class Ui_View(object):
 
     def retranslateUi(self, View):
         _translate = QtCore.QCoreApplication.translate
-        View.setWindowTitle(_translate("View", "Open Waether App"))
+        View.setWindowTitle(_translate("View", "View"))
         self.label_d_country.setText(_translate("View", "es"))
         self.label_lon.setText(_translate("View", "lon"))
         self.label_d_lon.setText(_translate("View", "39"))
@@ -1579,23 +1575,19 @@ class Ui_View(object):
         self.label_d_Sunrise_today.setText(_translate("View", "06:30"))
         self.label_Sunset_today.setText(_translate("View", "Sunset"))
         self.label_d_Sunset_today.setText(_translate("View", "21:20"))
-
-        self.label_d_alerts_sender.setText(_translate("View","AEMET"))
-        self.label_d_alerts_start.setText(_translate("View","01-08-2021 7:00"))
-        self.label_d_alerts_ends.setText(_translate("View","01-08-2021 21:00"))
-        self.label_d_alerts_event.setText(_translate("View","Very High temperature"))
-        self.label_d_alerts_description.setText(_translate("View","Aviso altas temperaturas en la costa"))
-
-
+        self.label_d_alerts_sender.setText(_translate("View", "AEMET"))
+        self.label_d_alerts_start.setText(_translate("View", "01-08-2021 7:00"))
+        self.label_d_alerts_ends.setText(_translate("View", "01-08-2021 21:00"))
+        self.label_d_alerts_event.setText(_translate("View", "Very High Temperature"))
+        self.label_d_alerts_description.setText(_translate("View", "Aviso por temperaturas muy elevadas en la costa"))
         self.pushButton_Clear.setStatusTip(_translate("View", "CLEAR: Clear data labels.  Shortcut: SHIFT+COMMAND+C"))
         self.pushButton_Clear.setText(_translate("View", "Clear"))
         self.pushButton_Clear.setShortcut(_translate("View", "Ctrl+Shift+C"))
         self.pushButton_Quit.setStatusTip(_translate("View", "Quit Application.  Shortcut: COMMAND+E"))
         self.pushButton_Quit.setText(_translate("View", "Quit"))
         self.pushButton_Quit.setShortcut(_translate("View", "Ctrl+E"))
-        
 
-        
+         
     def _button_go_weather(self):
 
         city=str(self.lineEdit_City.text())
@@ -1639,11 +1631,11 @@ class Ui_View(object):
         self.label_fore_UVI_day_2=""
         self.label_feels_today=""
 
-        self.label_d_alerts_sender=""
-        self.label_d_alerts_start=""
-        self.label_d_alerts_ends=""
-        self.label_d_alerts_event=""
-        self.label_d_alerts_event=""
+        self.label_alerts_sender=""
+        self.label_alerts_start=""
+        self.label_alerts_ends=""
+        self.label_alerts_event=""
+        self.label_alerts_description=""
         
         
 
@@ -1745,6 +1737,8 @@ class Ui_View(object):
         self.label_d_alerts_ends.setText(_translate("View",self.label_alerts_ends))
         self.label_d_alerts_event.setText(_translate("View",self.label_alerts_event))
         self.label_d_alerts_description.setText(_translate("View",self.label_alerts_description)) 
+
+        
 
     def _show_popup_null_label(self):
         dlg = QMessageBox()
