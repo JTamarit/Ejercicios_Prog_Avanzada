@@ -950,7 +950,7 @@ class Ui_View(object):
 
     def _clean_labels(self):
         
-        self.lineEdit_City.setText("")
+        self.lineEdit_City.setText("") 
         self.filepath=""
         self.filepathf1=""
         self.filepathf2=""
@@ -972,7 +972,6 @@ class Ui_View(object):
         self.label_fore_Tmin_day_2=""
         self.label_fore_UVI_day_2=""
         self.label_feels_today=""
-        return
 
     def _clean_labels_alerts(self):
 
@@ -981,7 +980,6 @@ class Ui_View(object):
         self.label_alerts_ends=""
         self.label_alerts_event=""
         self.label_alerts_description=""
-        return
 
     def _scrapper(self,city):
 
@@ -1000,9 +998,9 @@ class Ui_View(object):
                 self._button_clean_labels()
                 return
             self.lon=self.dict_current['coord']['lon']
-            endpoint_7days=(f"https://api.openweathermap.org/data/2.5/onecall?lat={self.lat}&lon={self.lon}&units={self.units}&exclude=hourly,minutely&appid={self.api_key}")
-            response_7days= requests.get(endpoint_7days)
-            self.dict_7days=response_7days.json()
+            endpoint_2days_fore=(f"https://api.openweathermap.org/data/2.5/onecall?lat={self.lat}&lon={self.lon}&units={self.units}&exclude=hourly,minutely&appid={self.api_key}")
+            response_2days_fore= requests.get(endpoint_2days_fore)
+            self.dict_2days_fore=response_2days_fore.json()
         else:
             self._show_popup_no_city()
             self._button_clean_labels()
@@ -1011,9 +1009,7 @@ class Ui_View(object):
     def _get_parameters(self):
         try:
             self.filepath=self._get_icon((self.dict_current['weather'][0]['icon']),"weathericon.png")
-        except KeyError:
-            return
-        except AttributeError:
+        except:
             return
 
         self.temp = str(round(self.dict_current['main']['temp']))
@@ -1027,31 +1023,31 @@ class Ui_View(object):
         self.label_WSpeed_today=str(round((self.dict_current['wind']['speed'])*3600/1000))
         self.label_Sunrise_today=self._get_data_time(self.dict_current['sys']['sunrise'], "hour")
         self.label_Sunset_today=self._get_data_time(self.dict_current['sys']['sunset'], "hour")
-        self.label_uvi_today=str(round(self.dict_7days['current']['uvi']))
-        self.filepathf1= self._get_icon((self.dict_7days['daily'][1]['weather'][0]['icon']),"icon_weather_fore_1.png")
-        self.filepathf2= self._get_icon((self.dict_7days['daily'][2]['weather'][0]['icon']),"weathericon_fore_2.png")
-        self.label_fore_Tm_day_1 = str(round(self.dict_7days['daily'][1]['temp']['max']))
-        self.label_fore_Tmin_day_1 = str(round(self.dict_7days['daily'][1]['temp']['min']))
-        self.label_fore_UVI_day_1 = str(int(self.dict_7days['daily'][1]['uvi']))
-        self.label_fore_Tm_day_2 = str(round(self.dict_7days['daily'][2]['temp']['max']))
-        self.label_fore_Tmin_day_2 = str(round(self.dict_7days['daily'][2]['temp']['min']))
-        self.label_fore_UVI_day_2 = str(int(self.dict_7days['daily'][2]['uvi']))
-        self.label_Fore_day_1=self._get_data_time(self.dict_7days['daily'][1]['dt'], "day")
-        self.label_Fore_day_2=self._get_data_time(self.dict_7days['daily'][2]['dt'], "day")
+        self.label_uvi_today=str(round(self.dict_2days_fore['current']['uvi']))
+        self.filepathf1= self._get_icon((self.dict_2days_fore['daily'][1]['weather'][0]['icon']),"icon_weather_fore_1.png")
+        self.filepathf2= self._get_icon((self.dict_2days_fore['daily'][2]['weather'][0]['icon']),"weathericon_fore_2.png")
+        self.label_fore_Tm_day_1 = str(round(self.dict_2days_fore['daily'][1]['temp']['max']))
+        self.label_fore_Tmin_day_1 = str(round(self.dict_2days_fore['daily'][1]['temp']['min']))
+        self.label_fore_UVI_day_1 = str(int(self.dict_2days_fore['daily'][1]['uvi']))
+        self.label_fore_Tm_day_2 = str(round(self.dict_2days_fore['daily'][2]['temp']['max']))
+        self.label_fore_Tmin_day_2 = str(round(self.dict_2days_fore['daily'][2]['temp']['min']))
+        self.label_fore_UVI_day_2 = str(int(self.dict_2days_fore['daily'][2]['uvi']))
+        self.label_Fore_day_1=self._get_data_time(self.dict_2days_fore['daily'][1]['dt'], "day")
+        self.label_Fore_day_2=self._get_data_time(self.dict_2days_fore['daily'][2]['dt'], "day")
 
         # Checking if there are any Alerts News
         try:
-            print(self.dict_7days['alerts'])
-        except KeyError:
-            print("There are any alerts at the moment")
+            self.label_alerts_sender=self.dict_2days_fore['alerts'][0]['sender_name']
+        except:
             self._clean_labels_alerts()
+            self.label_alerts_description="There are any alerts at the moment"
             return
 
-        self.label_alerts_sender=self.dict_7days['alerts'][0]['sender_name']
-        self.label_alerts_event=self.dict_7days['alerts'][0]['event']
-        self.label_alerts_description=self.dict_7days['alerts'][0]['description']
-        self.label_alerts_start=self._get_data_time(self.dict_7days['alerts'][0]['start'], "full_data")
-        self.label_alerts_ends=self._get_data_time(self.dict_7days['alerts'][0]['end'], "full_data")
+        self.label_alerts_sender=self.dict_2days_fore['alerts'][0]['sender_name']
+        self.label_alerts_event=self.dict_2days_fore['alerts'][0]['event']
+        self.label_alerts_description=self.dict_2days_fore['alerts'][0]['description']
+        self.label_alerts_start=self._get_data_time(self.dict_2days_fore['alerts'][0]['start'], "full_data")
+        self.label_alerts_ends=self._get_data_time(self.dict_2days_fore['alerts'][0]['end'], "full_data")
 
     def _get_icon(self,icon_weather,filename):
 
@@ -1109,6 +1105,8 @@ class Ui_View(object):
         self.label_d_alerts_description.setText(_translate("View",self.label_alerts_description))
         self.label_d_Fore_day_1.setText(_translate("View",self.label_Fore_day_1))
         self.label_d_Fore_day_2.setText(_translate("View",self.label_Fore_day_2))
+        self.lineEdit_City.setText("")
+    
 
     def _show_popup_no_city(self):
         dlg = QMessageBox()
