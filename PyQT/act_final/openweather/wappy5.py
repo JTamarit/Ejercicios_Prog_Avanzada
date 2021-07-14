@@ -84,8 +84,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.pushButton_quit.clicked.connect(MainWindow.close)
-        self.pushButton_current.clicked.connect(self._go_weather)
-        self.pushButton_clear.clicked.connect(self._clean_labels)
+        self.pushButton_current.clicked.connect(self._button_go_weather)
+        self.pushButton_clear.clicked.connect(self._button_clean_labels)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -106,15 +106,13 @@ class Ui_MainWindow(object):
         self.pushButton_quit.setText(_translate("MainWindow", "Quit"))
         self.pushButton_quit.setShortcut(_translate("MainWindow", "Meta+S"))
     
-    def _go_weather(self):
+    def _button_go_weather(self):
 
         city=str(self.lineEditCity.text())
 
         if city == "":
             self._show_popup_null_label()
-            self.temp=""
-            self.temp_feel=""
-            self.filepath=""
+            self._clean_labels()
         else:
             self._set_city(city)
             self._get_parameters_current()
@@ -123,14 +121,16 @@ class Ui_MainWindow(object):
             
         self._set_labels()
 
-    
+    def _button_clean_labels(self):
+        self._clean_labels()
+        self._set_labels
+
     def _clean_labels(self):
         
         self.lineEditCity.setText("")
         self.temp=""
         self.temp_feel=""
         self.filepath=""
-        self._set_labels()
 
     def _set_city(self,city):
         self.units="metric"
@@ -174,10 +174,7 @@ class Ui_MainWindow(object):
         self.temp = str(round(self.dict_current['main']['temp']))
         self.temp_feel=str(round(self.dict_current['main']['feels_like']))
         self.filepath=_path
-        
-        
-
-        
+           
 
     def _get_parameters_forecast(self):
         
@@ -187,7 +184,7 @@ class Ui_MainWindow(object):
             return
 
         print(self.dict_7days)
-        
+
         # Alerts
         try:
             print(self.dict_7days['alerts'])

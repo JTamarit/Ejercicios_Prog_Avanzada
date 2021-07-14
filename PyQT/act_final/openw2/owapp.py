@@ -586,6 +586,8 @@ class Ui_View(object):
         self.label_fore_Tm_day_1 = QtWidgets.QLabel(self.layoutWidget3)
         self.label_fore_Tm_day_1.setPalette(palette)
         font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
         self.label_fore_Tm_day_1.setFont(font)
         self.label_fore_Tm_day_1.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_fore_Tm_day_1.setObjectName("label_fore_Tm_day_1")
@@ -934,20 +936,12 @@ class Ui_View(object):
         self.pushButton_Quit.setText(_translate("View", "Quit"))
         self.pushButton_Quit.setShortcut(_translate("View", "Ctrl+E"))
 
-         
     def _button_go_weather(self):
 
         city=str(self.lineEdit_City.text())
-
-        if city == "":
-            self._show_popup_null_label()
-            self._button_clean_labels()
-        else:
-            self._set_city(city)
-            self._get_parameters_current()
-            self._scrapper_7_forecast()
-            self._get_parameters_forecast()
-            self._set_labels()
+        self._scrapper(city)
+        self._get_parameters()
+        self._set_labels()
 
     def _button_clean_labels(self):
         self._clean_labels()
@@ -986,42 +980,40 @@ class Ui_View(object):
         self.label_alerts_ends=""
         self.label_alerts_event=""
         self.label_alerts_description=""
+        return
 
-    def _set_city(self,city):
+    
+    def _scrapper(self,city):
 
         self.units="metric"
         self.api_key ="9a16a8e5458b6fdb0d040e46ee221bca"
         self.language="es"
-        self._scrapper_current_weather(city)
 
-    def _scrapper_current_weather(self,city):
-        # Get current weather and coord of the city.
-        
-        endpoint=(f"http://api.openweathermap.org/data/2.5/weather?q={city}&units={self.units}&uk&lang={self.language}&APPID={self.api_key}")
-        response= requests.get(endpoint)
-        self.dict_current=response.json()
-        
-    def _scrapper_7_forecast(self):
-         # Get 7 days forescast weather
-        try:
-            self.lat=self.dict_current['coord']['lat']
-        except KeyError:
-            return
-        self.lon=self.dict_current['coord']['lon']
-        endpoint_7days=(f"https://api.openweathermap.org/data/2.5/onecall?lat={self.lat}&lon={self.lon}&units={self.units}&exclude=hourly,minutely&appid={self.api_key}")
-        response_7days= requests.get(endpoint_7days)
-        self.dict_7days=response_7days.json()      
-        
-    def _get_parameters_current(self):
-
-        try:
-            icon_weather=self.dict_current['weather'][0]['icon']
-        except KeyError:
-            self._show_popup_city_notfound()
+        if city != "":
+            endpoint=(f"http://api.openweathermap.org/data/2.5/weather?q={city}&units={self.units}&uk&lang={self.language}&APPID={self.api_key}")
+            response= requests.get(endpoint)
+            self.dict_current=response.json()
+            try:
+                self.lat=self.dict_current['coord']['lat']
+            except KeyError:
+                self._show_popup_city_notfound()
+                self._button_clean_labels()
+                return
+            self.lon=self.dict_current['coord']['lon']
+            endpoint_7days=(f"https://api.openweathermap.org/data/2.5/onecall?lat={self.lat}&lon={self.lon}&units={self.units}&exclude=hourly,minutely&appid={self.api_key}")
+            response_7days= requests.get(endpoint_7days)
+            self.dict_7days=response_7days.json()
+        else:
+            self._show_popup_null_label()
             self._button_clean_labels()
             return
+    
+    def _get_parameters(self):
+        try:
+            self.filepath=self._get_icon((self.dict_current['weather'][0]['icon']),"weathericon.png")
+        except KeyError:
+            return
 
-        self.filepath=self._get_icon((self.dict_current['weather'][0]['icon']),"weathericon.png")
         self.temp = str(round(self.dict_current['main']['temp']))
         self.temp_feel=str(round(self.dict_current['main']['feels_like']))
         self.label_country=self.dict_current['sys']['country']
@@ -1033,18 +1025,8 @@ class Ui_View(object):
         self.label_WSpeed_today=str(round((self.dict_current['wind']['speed'])*3600/1000))
         self.label_Sunrise_today=self._get_data_time(self.dict_current['sys']['sunrise'], "hour")
         self.label_Sunset_today=self._get_data_time(self.dict_current['sys']['sunset'], "hour")
-           
-
-    def _get_parameters_forecast(self):
-        
-        try:
-            self.dict_7days
-        except AttributeError:
-            
-            return
 
         self.label_uvi_today=str(round(self.dict_7days['current']['uvi']))
-       
         self.filepathf1= self._get_icon((self.dict_7days['daily'][1]['weather'][0]['icon']),"icon_weather_fore_1.png")
         self.filepathf2= self._get_icon((self.dict_7days['daily'][2]['weather'][0]['icon']),"weathericon_fore_2.png")
         self.label_fore_Tm_day_1 = str(round(self.dict_7days['daily'][1]['temp']['max']))
