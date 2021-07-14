@@ -939,16 +939,13 @@ class Ui_View(object):
 
         if city == "":
             self._show_popup_null_label()
-            self._clean_labels()
-            self._clean_labels_alerts()
-            self._set_labels()
+            self._button_clean_labels()
         else:
             self._set_city(city)
             self._get_parameters_current()
             self._scrapper_7_forecast()
             self._get_parameters_forecast()
-            
-        self._set_labels()
+            self._set_labels()
 
     def _button_clean_labels(self):
         self._clean_labels()
@@ -1019,9 +1016,7 @@ class Ui_View(object):
             icon_weather=self.dict_current['weather'][0]['icon']
         except KeyError:
             self._show_popup_city_notfound()
-            self._clean_labels()
-            self._clean_labels_alerts()
-            self._set_labels()
+            self._button_clean_labels()
             return
 
         file_icon=(f"http://openweathermap.org/img/w/{icon_weather}.png")
@@ -1040,10 +1035,8 @@ class Ui_View(object):
         self.label_feels_today=str(round(self.dict_current['main']['feels_like']))
         self.label_humidity_today=str(self.dict_current['main']['humidity'])
         self.label_WSpeed_today=str(round((self.dict_current['wind']['speed'])*3600/1000))
-        timestamp = datetime.datetime.fromtimestamp(self.dict_current['sys']['sunrise'])
-        self.label_Sunrise_today=(timestamp.strftime('%H:%M'))
-        timestamp = datetime.datetime.fromtimestamp(self.dict_current['sys']['sunset'])
-        self.label_Sunset_today=(timestamp.strftime('%H:%M'))
+        self.label_Sunrise_today=self._get_data_time(self.dict_current['sys']['sunrise'], "hour")
+        self.label_Sunset_today=self._get_data_time(self.dict_current['sys']['sunset'], "hour")
            
 
     def _get_parameters_forecast(self):
@@ -1053,7 +1046,7 @@ class Ui_View(object):
         except AttributeError:
             
             return
-        self.label_uvi_today=str(self.dict_7days['current']['uvi'])
+        self.label_uvi_today=str(round(self.dict_7days['current']['uvi']))
         icon_weather_fore_1=self.dict_7days['daily'][1]['weather'][0]['icon']
         file_icon1=(f"http://openweathermap.org/img/w/{icon_weather_fore_1}.png")
         _path1=os.path.join("res","weathericon_fore_1.png")
@@ -1076,12 +1069,9 @@ class Ui_View(object):
         self.label_fore_Tm_day_2 = str(round(self.dict_7days['daily'][2]['temp']['max']))
         self.label_fore_Tmin_day_2 = str(round(self.dict_7days['daily'][2]['temp']['min']))
         self.label_fore_UVI_day_2 = str(int(self.dict_7days['daily'][2]['uvi']))
-        timestamp = datetime.datetime.fromtimestamp(self.dict_7days['daily'][1]['dt'])
-        self.label_Fore_day_1 = str(timestamp.strftime('%d-%m'))
-        timestamp = datetime.datetime.fromtimestamp(self.dict_7days['daily'][2]['dt'])
-        self.label_Fore_day_2 = str(timestamp.strftime('%d-%m'))
+        self.label_Fore_day_1=self._get_data_time(self.dict_7days['daily'][1]['dt'], "day")
+        self.label_Fore_day_2=self._get_data_time(self.dict_7days['daily'][2]['dt'], "day")
 
-        
         # Alerts
         try:
             print(self.dict_7days['alerts'])
@@ -1093,12 +1083,25 @@ class Ui_View(object):
         self.label_alerts_sender=self.dict_7days['alerts'][0]['sender_name']
         self.label_alerts_event=self.dict_7days['alerts'][0]['event']
         self.label_alerts_description=self.dict_7days['alerts'][0]['description']
-    
-        timestamp = datetime.datetime.fromtimestamp(self.dict_7days['alerts'][0]['start'])
-        self.label_alerts_start=str(timestamp.strftime('%d-%m-%Y %H:%M'))
-        timestamp = datetime.datetime.fromtimestamp(self.dict_7days['alerts'][0]['end'])
-        self.label_alerts_ends=str(timestamp.strftime('%d-%m-%Y %H:%M'))
+        self.label_alerts_start=self._get_data_time(self.dict_7days['alerts'][0]['start'], "full_data")
+        self.label_alerts_ends=self._get_data_time(self.dict_7days['alerts'][0]['end'], "full_data")
 
+    def _get_icon(self,*parameters):
+        pass
+
+    def _get_data_time(self,data,format):
+        if format == "full_data":
+            timestamp = datetime.datetime.fromtimestamp(data)
+            _data_time= str(timestamp.strftime('%d-%m-%Y %H:%M'))
+            return _data_time
+        elif format == "day":
+            timestamp = datetime.datetime.fromtimestamp(data)
+            _data_time= str(timestamp.strftime('%d-%m'))
+            return _data_time
+        elif format == "hour":
+            timestamp = datetime.datetime.fromtimestamp(data)
+            _data_time= str(timestamp.strftime('%H:%M'))
+            return _data_time
 
     def _set_labels(self):
 
