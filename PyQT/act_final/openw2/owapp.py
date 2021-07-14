@@ -947,6 +947,7 @@ class Ui_View(object):
         self._clean_labels()
         self._clean_labels_alerts()
         self._set_labels()
+        self.dict_current={}
 
     def _clean_labels(self):
         
@@ -1105,7 +1106,6 @@ class Ui_View(object):
         self.label_d_alerts_description.setText(_translate("View",self.label_alerts_description))
         self.label_d_Fore_day_1.setText(_translate("View",self.label_Fore_day_1))
         self.label_d_Fore_day_2.setText(_translate("View",self.label_Fore_day_2))
-        self.lineEdit_City.setText("")
     
 
     def _show_popup_no_city(self):
