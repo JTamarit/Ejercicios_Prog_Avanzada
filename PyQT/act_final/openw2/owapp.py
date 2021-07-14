@@ -1019,15 +1019,9 @@ class Ui_View(object):
             self._button_clean_labels()
             return
 
-        file_icon=(f"http://openweathermap.org/img/w/{icon_weather}.png")
-        _path=os.path.join("res","weathericon.png")
-        f=open(_path,'wb')
-        response_icon=requests.get(file_icon)
-        f.write(response_icon.content)
-        f.close
+        self.filepath=self._get_icon((self.dict_current['weather'][0]['icon']),"weathericon.png")
         self.temp = str(round(self.dict_current['main']['temp']))
         self.temp_feel=str(round(self.dict_current['main']['feels_like']))
-        self.filepath=_path
         self.label_country=self.dict_current['sys']['country']
         self.label_lon=str(self.dict_current['coord']['lon'])
         self.label_lat=str(self.dict_current['coord']['lat'])
@@ -1046,23 +1040,11 @@ class Ui_View(object):
         except AttributeError:
             
             return
+
         self.label_uvi_today=str(round(self.dict_7days['current']['uvi']))
-        icon_weather_fore_1=self.dict_7days['daily'][1]['weather'][0]['icon']
-        file_icon1=(f"http://openweathermap.org/img/w/{icon_weather_fore_1}.png")
-        _path1=os.path.join("res","weathericon_fore_1.png")
-        f=open(_path1,'wb')
-        response_icon=requests.get(file_icon1)
-        f.write(response_icon.content)
-        f.close
-        self.filepathf1=_path1
-        icon_weather_fore_2=self.dict_7days['daily'][2]['weather'][0]['icon']
-        file_icon2=(f"http://openweathermap.org/img/w/{icon_weather_fore_2}.png")
-        _path2=os.path.join("res","weathericon_fore_2.png")
-        f=open(_path2,'wb')
-        response_icon=requests.get(file_icon2)
-        f.write(response_icon.content)
-        f.close
-        self.filepathf2=_path2
+       
+        self.filepathf1= self._get_icon((self.dict_7days['daily'][1]['weather'][0]['icon']),"icon_weather_fore_1.png")
+        self.filepathf2= self._get_icon((self.dict_7days['daily'][2]['weather'][0]['icon']),"weathericon_fore_2.png")
         self.label_fore_Tm_day_1 = str(round(self.dict_7days['daily'][1]['temp']['max']))
         self.label_fore_Tmin_day_1 = str(round(self.dict_7days['daily'][1]['temp']['min']))
         self.label_fore_UVI_day_1 = str(int(self.dict_7days['daily'][1]['uvi']))
@@ -1086,11 +1068,17 @@ class Ui_View(object):
         self.label_alerts_start=self._get_data_time(self.dict_7days['alerts'][0]['start'], "full_data")
         self.label_alerts_ends=self._get_data_time(self.dict_7days['alerts'][0]['end'], "full_data")
 
-    def _get_icon(self,*parameters):
-        pass
+    def _get_icon(self,icon_weather,filename):
+        file_icon=(f"http://openweathermap.org/img/w/{icon_weather}.png")
+        _path=os.path.join("res",filename)
+        f=open(_path,'wb')
+        response_icon=requests.get(file_icon)
+        f.write(response_icon.content)
+        f.close
+        return _path
 
     def _get_data_time(self,data,format):
-        
+
         #  Convert values of dt: Data receiving time (in unix, UTC format)
 
         if format == "full_data":
