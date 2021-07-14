@@ -1090,6 +1090,9 @@ class Ui_View(object):
         pass
 
     def _get_data_time(self,data,format):
+        
+        #  Convert values of dt: Data receiving time (in unix, UTC format)
+
         if format == "full_data":
             timestamp = datetime.datetime.fromtimestamp(data)
             _data_time= str(timestamp.strftime('%d-%m-%Y %H:%M'))
