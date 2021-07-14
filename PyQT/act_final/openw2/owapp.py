@@ -972,6 +972,7 @@ class Ui_View(object):
         self.label_fore_Tmin_day_2=""
         self.label_fore_UVI_day_2=""
         self.label_feels_today=""
+        return
 
     def _clean_labels_alerts(self):
 
@@ -982,7 +983,6 @@ class Ui_View(object):
         self.label_alerts_description=""
         return
 
-    
     def _scrapper(self,city):
 
         self.units="metric"
@@ -1004,7 +1004,7 @@ class Ui_View(object):
             response_7days= requests.get(endpoint_7days)
             self.dict_7days=response_7days.json()
         else:
-            self._show_popup_null_label()
+            self._show_popup_no_city()
             self._button_clean_labels()
             return
     
@@ -1012,6 +1012,8 @@ class Ui_View(object):
         try:
             self.filepath=self._get_icon((self.dict_current['weather'][0]['icon']),"weathericon.png")
         except KeyError:
+            return
+        except AttributeError:
             return
 
         self.temp = str(round(self.dict_current['main']['temp']))
@@ -1025,7 +1027,6 @@ class Ui_View(object):
         self.label_WSpeed_today=str(round((self.dict_current['wind']['speed'])*3600/1000))
         self.label_Sunrise_today=self._get_data_time(self.dict_current['sys']['sunrise'], "hour")
         self.label_Sunset_today=self._get_data_time(self.dict_current['sys']['sunset'], "hour")
-
         self.label_uvi_today=str(round(self.dict_7days['current']['uvi']))
         self.filepathf1= self._get_icon((self.dict_7days['daily'][1]['weather'][0]['icon']),"icon_weather_fore_1.png")
         self.filepathf2= self._get_icon((self.dict_7days['daily'][2]['weather'][0]['icon']),"weathericon_fore_2.png")
@@ -1038,7 +1039,7 @@ class Ui_View(object):
         self.label_Fore_day_1=self._get_data_time(self.dict_7days['daily'][1]['dt'], "day")
         self.label_Fore_day_2=self._get_data_time(self.dict_7days['daily'][2]['dt'], "day")
 
-        # Alerts
+        # Checking if there are any Alerts News
         try:
             print(self.dict_7days['alerts'])
         except KeyError:
@@ -1053,6 +1054,7 @@ class Ui_View(object):
         self.label_alerts_ends=self._get_data_time(self.dict_7days['alerts'][0]['end'], "full_data")
 
     def _get_icon(self,icon_weather,filename):
+
         file_icon=(f"http://openweathermap.org/img/w/{icon_weather}.png")
         _path=os.path.join("res",filename)
         f=open(_path,'wb')
@@ -1063,7 +1065,7 @@ class Ui_View(object):
 
     def _get_data_time(self,data,format):
 
-        #  Convert values of dt: Data receiving time (in unix, UTC format)
+        #  Convert values of dt: Data receiving time (in unix, UTC format) to the  format d/m/y h:m.
 
         if format == "full_data":
             timestamp = datetime.datetime.fromtimestamp(data)
@@ -1084,7 +1086,6 @@ class Ui_View(object):
         self.label_d_today_icon.setPixmap(QtGui.QPixmap(self.filepath))
         self.label_f_day_1_icon.setPixmap(QtGui.QPixmap(self.filepathf1))
         self.label_f_day_2_icon.setPixmap(QtGui.QPixmap(self.filepathf2))
-        
         self.label_d_country.setText(_translate("View", self.label_country))
         self.label_d_lon.setText(_translate("View", self.label_lon))
         self.label_d_lat.setText(_translate("View", self.label_lat))
@@ -1101,7 +1102,6 @@ class Ui_View(object):
         self.label_d_WSpeed_today.setText(_translate("View", self.label_WSpeed_today))
         self.label_d_Sunrise_today.setText(_translate("View", self.label_Sunrise_today))
         self.label_d_Sunset_today.setText(_translate("View", self.label_Sunset_today))
-
         self.label_d_alerts_sender.setText(_translate("View",self.label_alerts_sender))
         self.label_d_alerts_start.setText(_translate("View",self.label_alerts_start))
         self.label_d_alerts_ends.setText(_translate("View",self.label_alerts_ends))
@@ -1110,9 +1110,7 @@ class Ui_View(object):
         self.label_d_Fore_day_1.setText(_translate("View",self.label_Fore_day_1))
         self.label_d_Fore_day_2.setText(_translate("View",self.label_Fore_day_2))
 
-        
-
-    def _show_popup_null_label(self):
+    def _show_popup_no_city(self):
         dlg = QMessageBox()
         dlg.setWindowTitle("Error") 
         dlg.setText("City can't be null.\nPlease enter a city name")
