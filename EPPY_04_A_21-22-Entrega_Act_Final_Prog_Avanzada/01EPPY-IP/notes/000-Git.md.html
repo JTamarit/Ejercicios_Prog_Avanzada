@@ -1,0 +1,118 @@
+<meta charset="utf-8">
+**01EPPY - 001 - Configuración Git**
+    <small>©2021 VIU - 01EPPY Introducción a la Programación - Iván Fuertes</small>
+
+Git
+==============================================================
+
+Se pone a disposición del alumno un repositorio *Git* alojado en la plataforma *GitHub* donde se irán actualizando los contenidos vistos en clase, que servirán de base para el desarrollo de la asignatura, así como para la realización de las diferentes actividades y ejercicios propuestos durante la misma.
+
+GitHub
+--------------------------------------------------------------
+
+Es necesario crear una cuenta en la plataforma *GitHub*,con esto ya se está en disposición de crear repositorios o trabajar con repositorios de terceros. Habrá que hacer llegar al profesor/coordinador el usuario de *GitHub* que se acaba de crear para recibir la invitación a acceder al repositorio privado de la asignatura.
+
+[GitHub](https://github.com/)
+
+![Figure [res/000]: Diálogo de creación de cuenta en GitHub](res/000.png width="400px")
+
+Fork
+--------------------------------------------------------------
+
+La *URL* con el repositorio del código fuente se pondrá a disposición de los alumnos al inicio de la asignatura. En la edición actual la *URL* es https://github.com/vany-viu/EPPY_04_A_21-22
+
+![Figure [res/001]: Página principal de GitHub con el repositorio de código](res/001.png)
+
+El siguiente paso es realizar un *Fork* del repositorio para tener una copia en la cuenta local del alumno y poder trabajar sobre él de manera individual sin afectar a los cambios en el repositorio general, pero aún así poder tener las actualizaciones del mismo en el repositorio local.
+
+Una vez dentro de *GitHub* con la cuenta creada en el paso anterior se busca el repositorio general, o se usa la *URL* provista del mismo. En la página principal del repositorio en la parte superior derecha hay un botón con la opción *Fork*.
+
+![Figure [res/002]: Botón Fork en la página del repositorio](res/002.png)
+
+Se pulsa dicho botón para iniciar el proceso de *Fork* desde el repositorio general hacia uno local en la cuenta *GitHub* del alumno. Una vez ese proceso finaliza, se habrá copiado el repositorio a la cuenta local. El encabezado de la copia local ahora indica que es un repositorio copiado que proviene del general.
+
+![Figure [res/003]: Encabezado del repositorio copiado](res/003.png)
+
+Clonar el Repositorio
+--------------------------------------------------------------
+
+El siguiente paso es clonar el repositorio copiado para poder trabajar con él en la maquina local, es decir, bajarse todo el código del mismo. Para ello se puede usar la linea de comandos y el comando *git*, pero se recomienda usar algún cliente que ofrezca alguna interfaz visual más cómoda, sobre todo al principio. En este documento se usará el programa *Fork* como cliente *Git*, y por tanto se recomienda su instalación (aunque las instrucciones serán equivalentes en otros clientes como *SourceTree*, *GitKraken*, *TortoiseGit*,...).
+
+[Fork](https://git-fork.com/)
+
+En la página de *GitHub*, en el repositorio copiado (*forked*) se pulsa sobre el botón *Clone or Download*, y se obtiene la ruta para poder clonar el repositorio.
+
+![Figure [res/004]: Ruta para clonar el repositorio copiado (Forked)](res/004.png)
+
+En el cliente *Git* se busca la opción para clonar un repositorio (*File->Clone*), y se pega la *url* obtenida de *GitHub*, así como la ruta local donde clonar el código y el nombre local del repositorio.
+
+![Figure [res/005]: Clonado del repositorio en el cliente de Git](res/005.png)
+
+Una vez clonado el repositorio nos aparece en la página principal con las ramas disponibles, los *commits* que se han hecho, cambios, ...
+
+![Figure [res/006]: Repositorio en el cliente de Git](res/006.png)
+
+Y en el explorador de archivos de la maquina local con todo el código fuente descargado y listo para empezar a trabajar sobre él.
+
+![Figure [res/007]: Repositorio en el cliente de Git](res/007.png)
+
+Configurar Ubicación Remota
+--------------------------------------------------------------
+
+Es importante mantener actualizado el repositorio local que se ha copiado (*forked*) para obtener los cambios y actualizaciones que se realicen en el repositorio global por el responsable del mismo (en este caso, el profesor). Por ejemplo, para ir incorporando el código generado durante las clases. Para eso hay que añadir una ubicación remota al repositorio copiado (*forked*). Pulsando con el botón derecho sobre la barra izquierda sobre la etiqueta *Remotes*, se selecciona la opción *Add New Remote*.
+
+![Figure [res/008]: Add New Remote](res/008.png)
+
+En el diálogo que se abre, se nombra al remote con el nombre de *UpStream* (por convención se suelen llamar así a los repositorios principales), y en la *url* se pone la del repositorio principal (se puede obtener la ruta yendo al repositorio principal y pulsando el botón *Clone or Download*). Importante, el original del cual hemos hecho el *fork*, no nuestro repositorio local. Y se pulsa el botón *Add New Remote*.
+
+![Figure [res/009]: Diálogo para añadir el nuevo remoto](res/009.png)
+
+De esta manera en la barra izquierda, en la sección de *remotes*, aparte de *origin*, que es el repositorio remoto donde se guardan los cambios de nuestro trabajo, ahora aparece *upstream*, que es el repositorio remoto del proyecto principal. Asimismo se muestran las diferentes ramas de ambos remotos.
+
+![Figure [res/010]: Remoto origin y upstream](res/010.png)
+
+Ahora ya se puede acceder desde el repositorio copiado (*forked*) a las ramas y *commits* del repositorio principal, y hacer *fetch*, *pull* y *merge* desde el mismo hacia el repositorio copiado para incluir las actualizaciones del mismo.
+
+Para ello el primer paso es hacer un *fetch* sobre la rama *main* del repositorio principal en *upstream*, para actualizar el repositorio local con los cambios remotos en dicho *upstream*.
+
+![Figure [res/011]: Repositorio upstream actualizado desde el repositorio copiado (forked)](res/011.png)
+
+Entonces hay que hacer un *pull* para integrar los cambios dentro de nuestro repositorio copiado (*forked*) y actualizar el código en nuestro espacio de trabajo de nuestra maquina local. Para ello se hace *pull* sobre el *remote* de *upstream*.
+
+![Figure [res/012]: Pull desde upstream hacia la rama develop del repositorio copiado (forked)](res/012.png)
+
+De esta manera se han incorporado los cambios realizados en el repositorio principal en *upstream* a nuestro repositorio copiado (*forked*) y por tanto a nuestro espacio de trabajo y ya se puede trabajar con todo el código actualizado.
+
+Flow
+--------------------------------------------------------------
+
+Cuando se está trabajando en el proyecto es común querer guardar los cambios en *Git* y usarlo como control de versiones, es decir, ser capaz de ver los cambios realizados por anteriores modificaciones, poder revertir esos cambios, ...
+
+![Figure [res/013]: Flujo de comandos en Git](res/013.png)
+
+Los comandos más habituales en *Git* y sus acciones son los siguientes (si se usa un cliente para trabajar con *Git* estos comandos suelen estar encapsulados en funciones dentro del mismo).
+
+[Chacon, S. & Straub, B. (2014). Pro Git. NYC, Apress](https://git-scm.com/book/en/v2)
+
+- *Stage*, cuando un fichero se modifica en el directorio de trabajo, con este comando se registra el cambio en el repositorio local.
+- *Commit*, de esta manera se confirman y guardan los cambios hechos en los ficheros del directorio de trabajo, antes de *commit* hay que hacer *stage* de los ficheros.
+- *Push*, se suben los cambios o commits hechos en el repositorio local al repositorio remoto.
+- *Clone*, se hace al inicio cuando se clona un repositorio remoto y se bajan sus contenidos al repositorio local.
+- *Fetch*, se actualiza el repositorio local con posibles cambios que hayan habido en el repositorio remoto.
+- *Pull*, se actualiza el repositorio local como en *fetch*, pero además se incorporan esos cambios a la rama de trabajo si los hubiera en dicha rama.
+- *Checkout*, se actualizan los contenidos del directorio de trabajo a partir de una rama del repositorio local.
+- *Branch*, para crear ramas de trabajo.
+- *Merge*, para mezclar el contenido de ramas de trabajo.
+- *Tag*, para crear etiquetas o *snapshots* del repositorio.
+
+El flujo de trabajo habitual suele ser, primero clonar el repositorio, hacer un *checkout* de la rama de *main* y definir el repositorio principal como *upstream* para incorporar cambios desde el. Eso se ha explicado en los puntos anteriores.
+
+Cuando se está trabajando se hacen modificaciones sobre los ficheros en el directorio de trabajo, cuando se quieren confirmar esos cambios, se hace *stage* y *commit* para guardarlos en el repositorio local. Cuando esos cambios se quieren actualizar en el repositorio remoto se hace *push*.
+
+Si se usa la rama *main* como única rama de trabajo, entonces para incorporar cambios del repositorio remoto hay que hacer un *pull* desde el repositorio remoto, y para incorporar cambios desde el repositorio principal en *upstream* hay que hacer un *pull* desde ese repositorio.
+
+Para hacer la entrega de actividades hay que hacer un *tag* en una fecha anterior a la fecha de entrega de dicha actividad, que certifique el estado del repositorio en ese momento.
+
+<link rel="stylesheet" href="res/md/viu.css">
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'long'};</script>
+<!-- Markdeep: --><script src="res/md/markdeep.min.js?" charset="utf-8"></script>

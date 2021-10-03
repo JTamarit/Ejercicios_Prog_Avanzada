@@ -1,0 +1,36 @@
+{
+    "screen_size" : [640, 480] ,
+    "title" : "Shmup",
+    "fps" : 60,
+    "background_color" : [0,0,0],
+
+    "entities" : {
+        "name" : "entities",
+        "image_path" : "shmup.assets.images",
+        "image_filename" : "entities.png",
+        "data_path" : "shmup.assets.images",
+        "data_filename" : "entities.json",
+        "hero" : {
+            "name" : "eagle",
+            "left_name" : "eagle_left",
+            "right_name" : "eagle_right",
+            "speed" : 0.3
+        },
+        "allied_projectile" : {
+            "name" : "allied_bullet",
+            "speed" : 0.4
+        },
+        "enemy_projectile" : {
+            "name" : "enemy_bullet",
+            "speed" : 0.2
+        }
+    },
+
+    "audio" : {
+        "allied_bullet": {
+            "name" : "allied_sound",
+            "sound_path" : "shmup.assets.sfx",
+            "sound_filename" : "allied_gunfire.wav"
+        }
+    }
+}
