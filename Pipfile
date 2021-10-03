@@ -14,6 +14,11 @@ requests = "*"
 pyowm = "*"
 pyttsx3 = "*"
 opencv-python = "*"
+numpy = "*"
+ipython = "*"
+pytest = "*"
+pandas = "*"
+matplotlib = "*"
 
 [dev-packages]
 
