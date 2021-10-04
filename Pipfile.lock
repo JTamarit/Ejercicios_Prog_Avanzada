@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c28440b42d63c41cab74d7f156b1498b5adf68228ff9a5dc28ad91a55679bddf"
+            "sha256": "9bcd9db6a6da04b9d2b4b1ec278f75ddb5dabb88f32b15b22fd9cbe84efec4c3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -1768,21 +1768,21 @@
         },
         "pyqt6": {
             "hashes": [
-                "sha256:0d364c410703290d09ff425a877cf80ca640afc190520ab8c86bc8f6bd6af592",
-                "sha256:79e5ec4d3b62d5a9a0fbfd946faac6f9a1b3c5cf4f8a7ca5073a389024ba967e",
-                "sha256:8775244fa73f94bfe8ae7672b624e2a903a22bc35d7ea42dd830949e2f9e43c7",
-                "sha256:b455579d75769d9892e6e70fb8ca360fe722cf57d710e17648f83233a7a43fdf"
+                "sha256:142ce7fa574d7ebb13fb0a2ebd18c86087c35829f786c094a71a0749155d8fee",
+                "sha256:82241b173c05242cd10e2dfd10af9a6e4b7732d2e17acf2730f154ab06f4180f",
+                "sha256:c43f4bb7dbe58b262b88da137de54a140091a5273b3333406a76507551c34321",
+                "sha256:ea4c1502214eed9090937f46ed33aca054ddc46240d6c5ce09886d1d6886b50e"
             ],
             "index": "pypi",
-            "version": "==6.1.1"
+            "version": "==6.2.0"
         },
         "pyqt6-qt6": {
             "hashes": [
-                "sha256:2532404306f425bb9712f055424302d01543476ad1b518f5753008310cd25157",
-                "sha256:4a668f2a0e6e5445d03a50b05a73619ff112f574c75d7ea23b3a4284044b8883",
-                "sha256:6eb5fce4a2a8b1c8aeea4f7a9eb59ea0fba7161490fbb3b02db6caae4003f1a7"
+                "sha256:7749e44ab5ca98aba766b283bcd08ebeb0ffb09e427efc7beac0c571525f3c5e",
+                "sha256:806dc7289614f08e1fa28ac5abbbbf2d61305a416b8183045b9c535321c7309c",
+                "sha256:c0d4c1b1b7bd0c9f21a6284d6aa53c041cb36dc464acb403cbe1bc8845090d30"
             ],
-            "version": "==6.1.3"
+            "version": "==6.2.0"
         },
         "pyqt6-sip": {
             "hashes": [
@@ -1923,6 +1923,14 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5'",
             "version": "==2.0.1"
+        },
+        "xlsxwriter": {
+            "hashes": [
+                "sha256:2f2af944d2b4b5f21cd3ac8e01b2417ec74c60e2ca11cae90b4f32ee172c99d6",
+                "sha256:3f39bf581c55f3ad1438bc170d7f4c4649cee8b6b7a80d21f79508118eeea52a"
+            ],
+            "index": "pypi",
+            "version": "==3.0.1"
         }
     },
     "develop": {}
