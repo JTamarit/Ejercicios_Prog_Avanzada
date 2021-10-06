@@ -23,6 +23,7 @@ excel2json-3 = "*"
 xlsxwriter = "*"
 
 [dev-packages]
+ipykernel = "*"
 
 [requires]
 python_version = "3.9"
