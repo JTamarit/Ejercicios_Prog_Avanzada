@@ -21,6 +21,9 @@ pandas = "*"
 matplotlib = "*"
 excel2json-3 = "*"
 xlsxwriter = "*"
+xlrd = "*"
+pyxlsb = "*"
+openpyxl = "*"
 
 [dev-packages]
 ipykernel = "*"
