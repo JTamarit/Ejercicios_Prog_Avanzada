@@ -24,6 +24,7 @@ xlsxwriter = "*"
 xlrd = "*"
 pyxlsb = "*"
 openpyxl = "*"
+streamlit = "*"
 
 [dev-packages]
 ipykernel = "*"
