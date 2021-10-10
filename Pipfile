@@ -25,6 +25,7 @@ xlrd = "*"
 pyxlsb = "*"
 openpyxl = "*"
 streamlit = "*"
+watchdog = "*"
 
 [dev-packages]
 ipykernel = "*"

@@ -173,3 +173,11 @@ with placeholder.container():
 time.sleep(4)
 placeholder.empty()
 """
+with st.form("New_Form"):
+    number = st.number_input('Insert a number 1')
+    number2= st.number_input('Insert a number 2')
+    st.write('The current number  1 is ', number)
+    st.write('The current number  2 is ', number2)
+    submitted_2 = st.form_submit_button("Submit")
+    if submitted_2:
+        st.write("Suma", number + number2 )
