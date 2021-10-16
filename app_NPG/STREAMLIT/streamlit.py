@@ -6,6 +6,7 @@ import time
 # Poner titulo:
 
 st.title('My first app')
+st.latex("y = x^2")
 
 # Escribir texto:
 
