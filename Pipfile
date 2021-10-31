@@ -28,6 +28,7 @@ streamlit = "*"
 watchdog = "*"
 xlwings = "*"
 pyxll = "*"
+seaborn = "*"
 
 [dev-packages]
 ipykernel = "*"
