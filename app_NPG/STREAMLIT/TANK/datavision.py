@@ -7,6 +7,32 @@ import matplotlib.colors
 from matplotlib.colors import LinearSegmentedColormap
 import seaborn as sns
 
+
+def season_selector(date):
+    # Obtenemos la estación de año a partir de la fecha.
+    season=['Winter','April','Summer','Autum']
+    date=datetime.now()
+    day=int(date.strftime("%d"))
+    month=int(date.strftime("%m"))
+    if (month >= 1 and month < 3) or (month == 12 and day >= 21) or (month == 3 and day < 21) :
+        return season[0]
+    if (month > 3 and month < 6) or (month == 6 and day < 21) or (month == 3 and day < 21):
+        return season[1]
+    if (month > 6 and month < 9) or (month == 6 and day >= 21) or (month == 9 and day < 21):
+        return season[2]
+    if (month > 9 and month < 12) or (month == 9 and day >= 21) or (month == 12 and day < 21):
+        return season[3]
+
+def inicio(nivel):
+    
+    num_valores=int(len(df['Nivel (%)']))
+    
+    if nivel == df['Nivel (%)'].iloc[0]:
+        return "Inicio"
+    if nivel == df['Nivel (%)'].iloc[(num_valores-1)]:
+        return "Fin"
+
+
 class Telemetry:
 
     def __init__(self):
@@ -47,11 +73,58 @@ class Tank:
         
         return num_tank_SSTT
 
+class Analisys:
+
+    def __init__(self,df):
+        self.df=df
+    
+    def build(self):
+
+        # Cambiamos el nombre de las columnas:
+        self.df.columns=['Timestamp','Nivel (%)','Presion (bar)']
+        # Separamos el timestamp en fecha y hora:
+        self.df['Date'] = [d.date() for d in self.df['Timestamp']]
+        self.df['Time'] = [d.time() for d in self.df['Timestamp']]
+        # Reordeamos columnas:
+        self.df = self.df.reindex(columns=['Timestamp','Date','Time','Nivel (%)','Presion (bar)'])
+        # Ordenamos los datos de forma ascendente por fecha y hora:
+        self.df=self.df.sort_values(by=['Date','Time'])
+        self.df=self.df.reset_index(drop=True)
+
+        #Eliminamos valores NaN en la columna 'Presion':
+        self.df = self.df[self.df['Presion (bar)'].notna()]
+
+        # Cambiamos el formato de la fecha para extraer por año, mes, dia y dia de la semana:
+        self.df['Date'] = pd.to_datetime(self.df['Date'])
+        self.df['Year'] = self.df['Date'].dt.strftime('%Y')
+        self.df['Month'] = self.df['Date'].dt.strftime('%m')
+        self.df['Day'] = self.df['Date'].dt.strftime('%d')
+        self.df['Day_of_Week'] = self.df['Date'].dt.day_name()
+        self.df['Month_Name'] = self.df['Date'].dt.month_name()
+
+        self.df['Date'] = self.df['Date'].dt.strftime('%d-%m-%Y')
+
+        # Clasificamos por epoca del año:
+        self.df['Season'] = self.df['Date'].apply(season_selector)
+
+        #Eliminamos valor 0 de la columna Nivel:
+        self.df=self.df.drop(self.df.loc[df['Nivel (%)']== 0].index)
+
+        # Creamos un columna en el Dataframe llamada Estado:
+        self.df['Estado']=self.df['Nivel (%)'].apply(inicio)
+
+        return self.df
+
+
+
 
 tl=Telemetry()
 df=tl.load_excel_to_df()
 info=tl.info(df)
 tnk=Tank(info)
-tank_v=tnk.tank_volum()
-nm_tank=tnk.number_SSTT()
-print(tank_v, nm_tank)
+#tank_v=tnk.tank_volum()
+#nm_tank=tnk.number_SSTT()
+#print(tank_v, nm_tank)
+anl=Analisys(df)
+df=anl.build()
+print(df)
