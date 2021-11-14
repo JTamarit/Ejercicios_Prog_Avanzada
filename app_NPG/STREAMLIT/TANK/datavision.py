@@ -27,9 +27,10 @@ class Telemetry:
 class Tank:
 
     def __init__(self,info_column):
-
+        self.info_column=info_column
         self.tank_model=info_column[1][1]
         self.tank_gas=info_column[1][2]
+        
     
     def tank_volum(self):
         tank_size=[self.tank_model[data] for data in range(len(self.tank_model)) if self.tank_model[data].isdigit()]
@@ -38,9 +39,9 @@ class Tank:
             tank_size = int(tank_size*1000)
         return tank_size
 
-    def number_SSTT(self, info_column):
+    def number_SSTT(self):
 
-        tank_SSTT=info_column[1][3]
+        tank_SSTT=self.info_column[1][3]
         num_tank_SSTT=[tank_SSTT[data] for data in range(len(tank_SSTT)) if tank_SSTT[data].isdigit()]
         num_tank_SSTT="".join(num_tank_SSTT)
         
@@ -50,4 +51,7 @@ class Tank:
 tl=Telemetry()
 df=tl.load_excel_to_df()
 info=tl.info(df)
-print(info)
+tnk=Tank(info)
+tank_v=tnk.tank_volum()
+nm_tank=tnk.number_SSTT()
+print(tank_v, nm_tank)
