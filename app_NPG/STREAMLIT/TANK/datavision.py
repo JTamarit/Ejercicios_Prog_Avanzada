@@ -202,6 +202,20 @@ class Analisys:
         consumo_df['Consumo m3']=(consumo_df['Nivel_0']-consumo_df['Nivel_f'])*int(tank_size)/100
         return consumo_df
 
+    def descargas(self,df):
+        #Filtra dataframe por descargas:
+        descargas_df = df[df['Estado'] == 'Empieza Descarga']
+        descargas_df =descargas_df.reset_index(drop=True)
+
+        return descargas_df
+
+    def numero_descargas(self,descargas_df):
+        #Obtenemos el número de descargas:
+        numero_descargas = int(len(descargas_df))
+        return numero_descargas
+
+
+
 
 
 tl=Telemetry()
@@ -217,3 +231,7 @@ anl=Analisys(df)
 df=anl.build()
 consumo_df=anl.consumo_total(df,tank_size)
 print(consumo_df)
+descargas_df=anl.descargas(df)
+numero_descargas=anl.numero_descargas(descargas_df)
+print(f'El numero de descargas es: {numero_descargas}')
+
