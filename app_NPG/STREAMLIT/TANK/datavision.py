@@ -9,7 +9,7 @@ import seaborn as sns
 
 class Model:
 
-    def season_selector(date):
+    def season_selector(self,date):
         # Obtenemos la estación de año a partir de la fecha.
         season=['Winter','April','Summer','Autum']
         date=datetime.now()
@@ -24,7 +24,7 @@ class Model:
         if (month > 9 and month < 12) or (month == 9 and day >= 21) or (month == 12 and day < 21):
             return season[3]
 
-    def inicio(nivel):
+    def inicio(self,nivel):
         
         num_valores=int(len(df['Nivel (%)']))
     
@@ -33,7 +33,7 @@ class Model:
         if nivel == df['Nivel (%)'].iloc[(num_valores-1)]:
             return "Fin"
 
-    def descarga_consumo(df):
+    def descarga_consumo(self,df):
         #Creamos una función que nos indica si el valor de nivel corresponde a un estado 
         #de consumo o llenado de la cisterna:
         #Creamos lista con todos los niveles:
@@ -72,7 +72,7 @@ class Model:
         
         return operacion
 
-    def consumo(dff):
+    def consumo(self,dff):
 
         # Cálculo de consumo:
 
@@ -172,17 +172,17 @@ class Analisys:
         self.df['Date'] = self.df['Date'].dt.strftime('%d-%m-%Y')
 
         # Clasificamos por epoca del año:
-        self.df['Season'] = self.df['Date'].apply(Model.season_selector)
+        self.df['Season'] = self.df['Date'].apply(model.season_selector)
 
         #Eliminamos valor 0 de la columna Nivel:
         self.df=self.df.drop(self.df.loc[df['Nivel (%)']== 0].index)
 
         # Creamos un columna en el Dataframe llamada Estado:
-        self.df['Estado']=self.df['Nivel (%)'].apply(Model.inicio)
+        self.df['Estado']=self.df['Nivel (%)'].apply(model.inicio)
 
         # Clasificamos estado:
 
-        estado= Model.descarga_consumo(self.df)
+        estado= model.descarga_consumo(self.df)
 
         # Hacemos una copia del Dataframe y llenamos el campo Estado con su valor:
         dff=self.df.copy()
@@ -196,7 +196,7 @@ class Analisys:
 
     def consumo_total(self,df,tank_size):
         # Creamos el Dataframe Consumo_df para trabajar con los datos de consumo:
-        consumo_df=pd.DataFrame(Model.consumo(df))
+        consumo_df=pd.DataFrame(model.consumo(df))
         consumo_df.columns=['Timestamp_0','Nivel_0','Estado_0','Timestamp_f', 'Nivel_f', 'Estado_f']
         consumo_df['Delta_Time']=consumo_df['Timestamp_f']-consumo_df['Timestamp_0']
         consumo_df['Consumo m3']=(consumo_df['Nivel_0']-consumo_df['Nivel_f'])*int(tank_size)/100
@@ -217,7 +217,7 @@ class Analisys:
 
 
 
-
+model=Model()
 tl=Telemetry()
 df=tl.load_excel_to_df()
 info=tl.info(df)
