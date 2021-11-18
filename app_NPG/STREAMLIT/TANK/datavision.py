@@ -155,7 +155,7 @@ class Tank:
         
         return num_tank_SSTT
 
-class Analisys:
+class Analisys_Consumo:
 
     def __init__(self,df):
         self.df=df
@@ -209,66 +209,73 @@ class Analisys:
 
         return self.df
 
-    def consumo_total(self,df,tank_size):
+    def consumo_total(self,tank_size):
         # Creamos el Dataframe Consumo_df para trabajar con los datos de consumo:
-        consumo_df=pd.DataFrame(model.consumo(df))
+        consumo_df=pd.DataFrame(model.consumo(self.df))
         consumo_df.columns=['Timestamp_0','Nivel_0','Estado_0','Timestamp_f', 'Nivel_f', 'Estado_f']
         consumo_df['Delta_Time']=consumo_df['Timestamp_f']-consumo_df['Timestamp_0']
         consumo_df['Consumo m3']=(consumo_df['Nivel_0']-consumo_df['Nivel_f'])*int(tank_size)/100
         return consumo_df
 
-    def descargas(self,df):
+    def descargas_df(self):
         #Filtra dataframe por descargas:
-        descargas_df = df[df['Estado'] == 'Empieza Descarga']
+        descargas_df = self.df[self.df['Estado'] == 'Empieza Descarga']
         descargas_df =descargas_df.reset_index(drop=True)
         return descargas_df
 
-    def numero_descargas(self,descargas_df):
+class Analisys_Descargas:
+
+    def __init__(self,descargas_df):
+        self.descargas_df=descargas_df
+
+    def numero_descargas(self):
         #Obtenemos el número de descargas:
-        numero_descargas = int(len(descargas_df))
+        numero_descargas = int(len(self.descargas_df))
         return print(f'El numero de descargas es: {numero_descargas}')
     
-    def run_outs(self,descargas_df):
-        descargas_df['Incidencia']=descargas_df['Nivel (%)'].apply(model.incident)
-        runouts=descargas_df[descargas_df['Incidencia']=="Run Out"]
+    def run_outs(self):
+        self.descargas_df['Incidencia']=self.descargas_df['Nivel (%)'].apply(model.incident)
+        runouts=self.descargas_df[self.descargas_df['Incidencia']=="Run Out"]
         num_runouts=len(runouts)
         return print(f'Run Outs:',num_runouts)
 
-    def descargas_nominal(self, descargas_df):
+    def descargas_nominal(self):
         counter=0
-        for element in descargas_df['Nivel (%)']:
+        for element in self.descargas_df['Nivel (%)']:
             if element < 40 and element >20:
                 counter += 1
         return print(f'Descargas Nominal: {counter}')
     
-    def descargas_plus40(self,descargas_df):
+    def descargas_plus40(self):
         counter=0
-        for element in descargas_df['Nivel (%)']:
+        for element in self.descargas_df['Nivel (%)']:
             if element > 40:
                 counter += 1
         return print(f'Descargas > 40% : {counter}')
 
 
-        
-        
-
 model=Model()
 tl=Telemetry()
+
 df=tl.load_excel_to_df()
+
+anl=Analisys_Consumo(df)
+
 info=tl.info(df)
+
 tnk=Tank(info)
-#tank_v=tnk.tank_volum()
-#nm_tank=tnk.number_SSTT()
-#print(tank_v, nm_tank)
+
 tank_size=tnk.tank_volum()
 print(tank_size)
-anl=Analisys(df)
-df=anl.build()
-consumo_df=anl.consumo_total(df,tank_size)
-print(consumo_df)
-descargas_df=anl.descargas(df)
-anl.numero_descargas(descargas_df)
-anl.run_outs(descargas_df)
-anl.descargas_nominal(descargas_df)
-anl.descargas_plus40(descargas_df)
 
+df=anl.build()
+consumo_df=anl.consumo_total(tank_size)
+print(consumo_df)
+
+descargas_df=anl.descargas_df()
+
+anl_d=Analisys_Descargas(descargas_df)
+anl_d.numero_descargas()
+anl_d.run_outs()
+anl_d.descargas_nominal()
+anl_d.descargas_plus40()
