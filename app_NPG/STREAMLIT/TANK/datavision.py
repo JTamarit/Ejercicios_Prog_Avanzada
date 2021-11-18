@@ -100,6 +100,21 @@ class Model:
 
         return total_consumo
 
+    def delta_time_descargas(self,timestamps):
+        delta_time=[0]
+    
+        for v in range(len(timestamps)-1):
+        
+            delta= timestamps[v+1]- timestamps[v]
+            delta_time.append(delta)
+        
+        return delta_time
+
+    def incident(self,volumen):
+        if volumen < 20.0:
+            return "Run Out"
+
+
 class Telemetry:
 
     def __init__(self):
@@ -206,16 +221,36 @@ class Analisys:
         #Filtra dataframe por descargas:
         descargas_df = df[df['Estado'] == 'Empieza Descarga']
         descargas_df =descargas_df.reset_index(drop=True)
-
         return descargas_df
 
     def numero_descargas(self,descargas_df):
         #Obtenemos el número de descargas:
         numero_descargas = int(len(descargas_df))
-        return numero_descargas
+        return print(f'El numero de descargas es: {numero_descargas}')
+    
+    def run_outs(self,descargas_df):
+        descargas_df['Incidencia']=descargas_df['Nivel (%)'].apply(model.incident)
+        runouts=descargas_df[descargas_df['Incidencia']=="Run Out"]
+        num_runouts=len(runouts)
+        return print(f'Run Outs:',num_runouts)
+
+    def descargas_nominal(self, descargas_df):
+        counter=0
+        for element in descargas_df['Nivel (%)']:
+            if element < 40 and element >20:
+                counter += 1
+        return print(f'Descargas Nominal: {counter}')
+    
+    def descargas_plus40(self,descargas_df):
+        counter=0
+        for element in descargas_df['Nivel (%)']:
+            if element > 40:
+                counter += 1
+        return print(f'Descargas > 40% : {counter}')
 
 
-
+        
+        
 
 model=Model()
 tl=Telemetry()
@@ -232,6 +267,8 @@ df=anl.build()
 consumo_df=anl.consumo_total(df,tank_size)
 print(consumo_df)
 descargas_df=anl.descargas(df)
-numero_descargas=anl.numero_descargas(descargas_df)
-print(f'El numero de descargas es: {numero_descargas}')
+anl.numero_descargas(descargas_df)
+anl.run_outs(descargas_df)
+anl.descargas_nominal(descargas_df)
+anl.descargas_plus40(descargas_df)
 
