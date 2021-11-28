@@ -220,6 +220,10 @@ def descargas_plus40():
 #Ordenamos por nivel del tanque a la descarga de mayor a menor:
 descargas_df=descargas_df.sort_values(by=['Nivel (%)'], ascending=False)
 
+#Representacion de datos:
+
+
+
 #Customizamos la paleta de colores:
 sns.set(style="whitegrid", color_codes=True)
 pal=sns.color_palette("rainbow", len(descargas_df))
