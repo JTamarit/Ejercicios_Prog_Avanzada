@@ -1,7 +1,8 @@
 import os
 import numpy as np
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
+import time
 import matplotlib.pyplot as plt
 import matplotlib.colors
 from matplotlib.colors import LinearSegmentedColormap
@@ -253,6 +254,56 @@ class Analisys_Descargas:
                 counter += 1
         return print(f'Descargas > 40% : {counter}')
 
+class Statistics:
+
+    def __init__(self,consumo_df):
+        self.gradient_df=consumo_df.drop(['Timestamp_0','Nivel_0','Estado_0','Timestamp_f','Nivel_f','Estado_f'],axis=1)
+
+    def deltatime_to_seconds(self):
+        self.gradient_df['Delta_T_Segundos']=self.gradient_df['Delta_Time'].apply(timedelta.total_seconds)
+        return self.gradient_df
+    
+    def periodo_total(self):
+        #Calculo del periodo de consumo:
+        p_total=self.gradient_df['Delta_Time'].sum()
+        return p_total
+
+    def consumo_total(self):
+        #Consumo total periodo:
+        c_total=self.gradient_df['Consumo m3'].sum()
+        return c_total
+    
+    def dataframe_estadisticos_consumo(self):
+        #Calculo pendiente:
+        self.gradient_df['Slope']=-self.gradient_df['Consumo m3']/self.gradient_df['Delta_T_Segundos']
+
+        # Cálculo estadisticos de consumo:
+        df=self.gradient_df
+        results=[]
+        name_columns=list(df.columns)
+    
+        for i in range(len(name_columns)):
+        
+            if i>0 and name_columns[i]=='Delta_T_Segundos':
+                mean=time.strftime('%d %H:%M:%S', time.gmtime(df[name_columns[i]].mean()))
+                median=time.strftime('%d %H:%M:%S', time.gmtime(df[name_columns[i]].median()))
+                deviation_std=time.strftime('%d %H:%M:%S', time.gmtime(df[name_columns[i]].std()))
+                results.append(np.array([mean,median,deviation_std]))
+        
+            if i>0 and (name_columns[i] != 'Delta_T_Segundos'):
+                mean=df[name_columns[i]].mean()
+                median=df[name_columns[i]].median()
+                deviation_std=df[name_columns[i]].std()
+                results.append(np.array([mean,median,deviation_std]))
+
+        stats_df=pd.DataFrame(results,index=['Consumo(m3)','Delta_t(dias)','Pendiente'],columns=['Media','Mediana','Desviacion Standar'])
+        return print(stats_df)
+
+
+
+        
+
+
 
 model=Model()
 tl=Telemetry()
@@ -279,3 +330,12 @@ anl_d.numero_descargas()
 anl_d.run_outs()
 anl_d.descargas_nominal()
 anl_d.descargas_plus40()
+
+stats=Statistics(consumo_df)
+stats.deltatime_to_seconds()
+p_total=stats.periodo_total()
+c_total=stats.consumo_total()
+print(f'El consumo total en {p_total} ha sido de: {int(c_total)} m3')
+stats.dataframe_estadisticos_consumo()
+
+
