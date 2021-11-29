@@ -161,8 +161,11 @@ class Tank:
 
 class Analisys_Consumo:
 
-    def __init__(self,df):
+    def __init__(self,df,consumo_df=None, descargas_df=None, gradient_df=None):
         self.df=df
+        self.consumo_df=consumo_df
+        self.descargas_df=descargas_df
+        self.gradient_df=gradient_df
     
     def build(self):
 
@@ -213,24 +216,19 @@ class Analisys_Consumo:
 
         return self.df
 
-    def consumo_total(self,tank_size):
+    def consumo(self,tank_size):
         # Creamos el Dataframe Consumo_df para trabajar con los datos de consumo:
-        consumo_df=pd.DataFrame(model.consumo(self.df))
-        consumo_df.columns=['Timestamp_0','Nivel_0','Estado_0','Timestamp_f', 'Nivel_f', 'Estado_f']
-        consumo_df['Delta_Time']=consumo_df['Timestamp_f']-consumo_df['Timestamp_0']
-        consumo_df['Consumo m3']=(consumo_df['Nivel_0']-consumo_df['Nivel_f'])*int(tank_size)/100
-        return consumo_df
+        self.consumo_df=pd.DataFrame(model.consumo(self.df))
+        self.consumo_df.columns=['Timestamp_0','Nivel_0','Estado_0','Timestamp_f', 'Nivel_f', 'Estado_f']
+        self.consumo_df['Delta_Time']=self.consumo_df['Timestamp_f']-self.consumo_df['Timestamp_0']
+        self.consumo_df['Consumo m3']=(self.consumo_df['Nivel_0']-self.consumo_df['Nivel_f'])*int(tank_size)/100
+        return self.consumo_df
 
-    def descargas_df(self):
+    def descargas(self):
         #Filtra dataframe por descargas:
-        descargas_df = self.df[self.df['Estado'] == 'Empieza Descarga']
-        descargas_df =descargas_df.reset_index(drop=True)
-        return descargas_df
-
-class Analisys_Descargas:
-
-    def __init__(self,descargas_df):
-        self.descargas_df=descargas_df
+        self.descargas_df = self.df[self.df['Estado'] == 'Empieza Descarga']
+        self.descargas_df =self.descargas_df.reset_index(drop=True)
+        return self.descargas_df
 
     def numero_descargas(self):
         #Obtenemos el número de descargas:
@@ -257,12 +255,9 @@ class Analisys_Descargas:
                 counter += 1
         return print(f'Descargas > 40% : {counter}')
 
-class Statistics:
-
-    def __init__(self,consumo_df):
-        self.gradient_df=consumo_df.drop(['Timestamp_0','Nivel_0','Estado_0','Timestamp_f','Nivel_f','Estado_f'],axis=1)
 
     def deltatime_to_seconds(self):
+        self.gradient_df=consumo_df.drop(['Timestamp_0','Nivel_0','Estado_0','Timestamp_f','Nivel_f','Estado_f'],axis=1)
         self.gradient_df['Delta_T_Segundos']=self.gradient_df['Delta_Time'].apply(timedelta.total_seconds)
         return self.gradient_df
     
@@ -271,7 +266,7 @@ class Statistics:
         p_total=self.gradient_df['Delta_Time'].sum()
         return p_total
 
-    def consumo_total(self):
+    def consum_total(self):
         #Consumo total periodo:
         c_total=self.gradient_df['Consumo m3'].sum()
         return c_total
@@ -319,22 +314,16 @@ tank_size=tnk.tank_volum()
 print(tank_size)
 
 df=anl.build()
-consumo_df=anl.consumo_total(tank_size)
-print(consumo_df)
 
-descargas_df=anl.descargas_df()
+consumo_df=anl.consumo(tank_size)
+descargas_df=anl.descargas()
 
-anl_d=Analisys_Descargas(descargas_df)
-anl_d.numero_descargas()
-anl_d.run_outs()
-anl_d.descargas_nominal()
-anl_d.descargas_plus40()
-
-stats=Statistics(consumo_df)
-stats.deltatime_to_seconds()
-p_total=stats.periodo_total()
-c_total=stats.consumo_total()
+anl.numero_descargas()
+anl.run_outs()
+anl.descargas_nominal()
+anl.descargas_plus40()
+anl.deltatime_to_seconds()
+p_total=anl.periodo_total()
+c_total=anl.consum_total()
 print(f'El consumo total en {p_total} ha sido de: {int(c_total)} m3')
-stats.dataframe_estadisticos_consumo()
-
-
+anl.dataframe_estadisticos_consumo()
