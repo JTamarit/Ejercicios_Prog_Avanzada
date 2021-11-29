@@ -10,6 +10,9 @@ import seaborn as sns
 
 class Model:
 
+    def __init__(self):
+        pass
+
     def season_selector(self,date):
         # Obtenemos la estación de año a partir de la fecha.
         season=['Winter','April','Summer','Autum']
@@ -298,10 +301,6 @@ class Statistics:
 
         stats_df=pd.DataFrame(results,index=['Consumo(m3)','Delta_t(dias)','Pendiente'],columns=['Media','Mediana','Desviacion Standar'])
         return print(stats_df)
-
-
-
-        
 
 
 
