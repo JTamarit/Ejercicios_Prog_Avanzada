@@ -300,24 +300,24 @@ class Analisys_Consumo:
 
 
 model=Model()
-tl=Telemetry()
+tel=Telemetry()
 
-df=tl.load_excel_to_df()
-
+#Cargamos dataframe:
+df=tel.load_excel_to_df()
 anl=Analisys_Consumo(df)
 
-info=tl.info(df)
-
+#Cargamos info de tanque:
+info=tel.info(df)
 tnk=Tank(info)
-
 tank_size=tnk.tank_volum()
 print(tank_size)
 
+#Preparamos df para el analisis de datos:
 df=anl.build()
-
 consumo_df=anl.consumo(tank_size)
 descargas_df=anl.descargas()
 
+# Analisis:
 anl.numero_descargas()
 anl.run_outs()
 anl.descargas_nominal()
