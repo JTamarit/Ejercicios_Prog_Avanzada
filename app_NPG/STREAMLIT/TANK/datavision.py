@@ -116,35 +116,37 @@ class Model:
 
     def incident(self,volumen):
         if volumen < 20.0:
-            return "Run Out"
+            return "Run Out" 
 
+class Controller:
 
-class Telemetry:
-
-    def __init__(self):
+    def __init__(self,df=None,info_column=None,tank_model=None,tank_gas=None,consumo_df=None, descargas_df=None, gradient_df=None):
         self.input_data="Telemetry.xlsx"
         self.output_data="output.xlsx"
-    
-    def load_excel_to_df(self):
-        df=pd.read_excel(os.path.join(self.input_data))
-        return df
+        self.df=df
+        self.info_column=info_column
+        self.tank_model=tank_model
+        self.tank_gas=tank_gas
+        self.consumo_df=consumo_df
+        self.descargas_df=descargas_df
+        self.gradient_df=gradient_df
 
-    def info (self,df):
-        info_column=df.columns.str.split('_')
-        return info_column
+    def load_excel_to_df(self):
+        self.df=pd.read_excel(os.path.join(self.input_data))
+        return self.df
+
+    def info (self):
+        self.info_column=self.df.columns.str.split('_')
+        return self.info_column
 
     def save_excel(self,df):
         #Exportamos el dataframe a excel:
-        df.to_excel(os.path.join('output.xlsx'))
-
-class Tank:
-
-    def __init__(self,info_column):
-        self.info_column=info_column
-        self.tank_model=info_column[1][1]
-        self.tank_gas=info_column[1][2]
-        
+        df.to_excel(os.path.join(self.output_data))
     
+    def model_tank(self):
+        self.tank_model=self.info_column[1][1]
+        return self.tank_model
+
     def tank_volum(self):
         tank_size=[self.tank_model[data] for data in range(len(self.tank_model)) if self.tank_model[data].isdigit()]
         tank_size="".join(tank_size)
@@ -152,21 +154,16 @@ class Tank:
             tank_size = int(tank_size*1000)
         return tank_size
 
-    def number_SSTT(self):
+    def tipo_gas(self):
+        self.tank_gas=self.info_column[1][2]
+        return self.tank_gas
 
+    def number_SSTT(self):
         tank_SSTT=self.info_column[1][3]
         num_tank_SSTT=[tank_SSTT[data] for data in range(len(tank_SSTT)) if tank_SSTT[data].isdigit()]
         num_tank_SSTT="".join(num_tank_SSTT)
-        
         return num_tank_SSTT
-
-class Analisys_Consumo:
-
-    def __init__(self,df,consumo_df=None, descargas_df=None, gradient_df=None):
-        self.df=df
-        self.consumo_df=consumo_df
-        self.descargas_df=descargas_df
-        self.gradient_df=gradient_df
+    
     
     def build(self):
 
@@ -198,7 +195,7 @@ class Analisys_Consumo:
         self.df['Season'] = self.df['Date'].apply(model.season_selector)
 
         #Eliminamos valor 0 de la columna Nivel:
-        self.df=self.df.drop(self.df.loc[df['Nivel (%)']== 0].index)
+        self.df=self.df.drop(self.df.loc[self.df['Nivel (%)']== 0].index)
 
         # Creamos un columna en el Dataframe llamada Estado:
         self.df['Estado']=self.df['Nivel (%)'].apply(model.inicio)
@@ -298,33 +295,36 @@ class Analisys_Consumo:
         stats_df=pd.DataFrame(results,index=['Consumo(m3)','Delta_t(dias)','Pendiente'],columns=['Media','Mediana','Desviacion Standar'])
         return print(stats_df)
 
+class View:
+    pass
 
 
 model=Model()
-tel=Telemetry()
+controller=Controller()
 
 #Cargamos dataframe:
-df=tel.load_excel_to_df()
-anl=Analisys_Consumo(df)
+df=controller.load_excel_to_df()
 
 #Cargamos info de tanque:
-info=tel.info(df)
-tnk=Tank(info)
-tank_size=tnk.tank_volum()
+controller.info()
+controller.model_tank()
+tank_size=controller.tank_volum()
 print(tank_size)
+n_SSTT=controller.number_SSTT()
+print(n_SSTT)
 
 #Preparamos df para el analisis de datos:
-df=anl.build()
-consumo_df=anl.consumo(tank_size)
-descargas_df=anl.descargas()
+df=controller.build()
+consumo_df=controller.consumo(tank_size)
+descargas_df=controller.descargas()
 
 # Analisis:
-anl.numero_descargas()
-anl.run_outs()
-anl.descargas_nominal()
-anl.descargas_plus40()
-anl.deltatime_to_seconds()
-p_total=anl.periodo_total()
-c_total=anl.consum_total()
+controller.numero_descargas()
+controller.run_outs()
+controller.descargas_nominal()
+controller.descargas_plus40()
+controller.deltatime_to_seconds()
+p_total=controller.periodo_total()
+c_total=controller.consum_total()
 print(f'El consumo total en {p_total} ha sido de: {int(c_total)} m3')
-anl.dataframe_estadisticos_consumo()
+controller.dataframe_estadisticos_consumo()
