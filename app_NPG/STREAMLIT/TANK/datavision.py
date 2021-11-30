@@ -312,6 +312,8 @@ tank_size=controller.tank_volum()
 print(tank_size)
 n_SSTT=controller.number_SSTT()
 print(n_SSTT)
+gas=controller.tipo_gas()
+print(gas)
 
 #Preparamos df para el analisis de datos:
 df=controller.build()
