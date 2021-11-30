@@ -133,8 +133,9 @@ class Telemetry:
         info_column=df.columns.str.split('_')
         return info_column
 
-    def save_excel(self):
-        pass
+    def save_excel(self,df):
+        #Exportamos el dataframe a excel:
+        df.to_excel(os.path.join('output.xlsx'))
 
 class Tank:
 
